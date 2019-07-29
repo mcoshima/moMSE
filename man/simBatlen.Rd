@@ -4,14 +4,12 @@
 \alias{simBatlen}
 \title{Calculates biomass at age for fishery independent surveys}
 \usage{
-simBatlen(Nlen, Flt, lsel, year)
+simBatlen(Nlen, dat.list, year)
 }
 \arguments{
 \item{Nlen}{matrix with numbers at length}
 
-\item{Flt}{number of fleets (2)}
-
-\item{lsel}{selectivity-at-length matrix}
+\item{dat.list}{list with the number of fishery independent surveys and a selectivity-at-length matrix}
 
 \item{year}{current year in simulation}
 }
@@ -19,7 +17,7 @@ simBatlen(Nlen, Flt, lsel, year)
 Calculates biomass at age for fishery independent surveys
 }
 \examples{
-simBatlen()
+
 
 }
 \keyword{biomass-at-length}

@@ -19,7 +19,7 @@ rand_intvect(N, M, sd = 1, pos.only = TRUE)
 This creates a vector of N whole numbers that add up to M.
 }
 \examples{
-rand_intvect()
+
 }
 \keyword{discrete}
 \keyword{random,}

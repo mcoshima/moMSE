@@ -11,10 +11,10 @@
 #' @keywords SS data, update
 #' @export
 #' @examples
-#' dat.update()
+#'
 dat.update <- function(year, dat., agecomp.list, I, .datcatch, comp.I, dir., write = T){
 
-
+  year.seq <- seq(2014, 2014+50, by = .5)
   yr <- floor(year.seq[year])
   rows <- seq(year-9,year) #rows from the past 4 years
 

@@ -1,37 +1,19 @@
 
-#' Convert fish age to length using von Bertalanffy 3-param equation
-#'
-#' @param N matrix with numbers at age
-#' @param age max age
-#' @param year current year in simulation
-#' @param linf L-infinity value
-#' @param k K coefficient
-#' @param t0 age at length 0
-#' @param cvdist vector of CVs to sample from
-#' @keywords age, length, von Bertalanffy
-#' @export
-#' @examples
-#' age.to.length()
-
-age.to.length <- function(N,age,year,linf,k,t0,cvdist){
-  len.vec <- c()
-  for(n in 1:round(N[year,age+2],0)){
-    len.vec[n] <- linf*(1-exp(-k*(age-t0)))*exp(sample(cvdist, 1))
-  }
-  return(len.vec)
-}
-
 #' Calcualte total mortality at age
 #'
-#' @param M natural mortality at age, matrix or df
-#' @param sel matrix of selectivities at age for each fleet
+#' @param dat.list Contains natural mortality at age, matrix or df and selectivity-at-age matrix
+#' @param year current year
 #' @param f.by.fleet Fishing mortality by fleet for year y
 #' @keywords mortality
 #' @export
 #' @examples
-#' zatage()
 #'
-zatage <- function(M,sel,f.by.fleet){
+#'
+zatage <- function(dat.list,year,f.by.fleet){
+
+  M <- dat.list$M
+  asel <- dat.list$age_selectivity
+  Nages <- dat.list$Nages
   f <- matrix(NA, nrow = length(f.by.fleet), ncol = Nages)
   for(fleet in 1:4){
 
@@ -41,10 +23,9 @@ zatage <- function(M,sel,f.by.fleet){
 
   Z
 }
-
 #' Converts catch in numbers to catch in biomass
 #'
-#' @param sel Selectivity-at-age matrix
+#' @param dat.list Contains selectivity-at-age matrix and weight-at-age matrix
 #' @param N matrix with numbers at age
 #' @param year current year in simulation
 #' @param z total mortality at age vector
@@ -52,9 +33,13 @@ zatage <- function(M,sel,f.by.fleet){
 #' @keywords catch
 #' @export
 #' @examples
-#' catch.in.biomass()
 #'
-catch.in.biomass <- function(sel,N,year,z,f.by.fleet){
+#'
+catch.in.biomass <- function(dat.list,N,year,z,f.by.fleet){
+
+  sel <- dat.list$age_selectivity
+  wtatage <- dat.list$wtatage
+  catch <- matrix(data = NA, nrow = 4, ncol = 15)
   for(fleet in 1:2){
     for(age in 1:15){
 
@@ -66,9 +51,10 @@ catch.in.biomass <- function(sel,N,year,z,f.by.fleet){
 }
 
 
+
 #' Calculates numbers at age of catch
 #'
-#' @param fsel Selectivity-at-age matrix of fisheries
+#' @param dat.list Contains selectivity-at-age matrix of fisheries and catch SE
 #' @param N matrix with numbers at age
 #' @param year current year in simulation
 #' @param z total mortality at age vector
@@ -77,9 +63,14 @@ catch.in.biomass <- function(sel,N,year,z,f.by.fleet){
 #' @keywords catch
 #' @export
 #' @examples
-#' catch.in.number()
 #'
-catch.in.number <- function(fsel,N,year,z,f.by.fleet,se){
+#'
+
+catch.in.number <- function(dat.list,N,year,z,f.by.fleet){
+
+  sel <- dat.list$age_selectivity
+  se <- dat.list$catch_se
+  catch <- matrix(data = NA, nrow = 4, ncol = 15)
   for(fleet in 1:4){
     for(age in 1:15){
 
@@ -95,17 +86,17 @@ catch.in.number <- function(fsel,N,year,z,f.by.fleet,se){
 #' Inputs need to be a dataframe, not a matrix.
 #'
 #' @param df dataframe of values you are converting
-#' @param wtatage matrix of weights at age
+#' @param dat.list list that contains matrix of weights at age
 #' @param Natage default is TRUE, T converts N-at-age to biomass, F converts B-at-age to numbers
 #' @param age0 defualt is FALSE, will exclude age0 in calculations, TRUE will include them
 #' @keywords numbers-at-age, biomass-at-age
 #' @export
 #' @examples
-#' num_to_bio()
 #'
-num_to_bio <- function(df, wtatage, Natage = T, age0 = F){
+#'
+num_to_bio <- function(df, dat.list, Natage = T, age0 = F){
 
-  #age0 = F means you don't want to include age0 in calculations, if T you do
+  wtatage <- dat.list$wtatage
 
   if(Natage == T){
     Batage <- matrix(NA, nrow= nrow(df), ncol = ncol(df))
@@ -151,18 +142,24 @@ num_to_bio <- function(df, wtatage, Natage = T, age0 = F){
 #' Calculates biomass at age for fishery dependent surveys
 #'
 #' @param N matrix with numbers at age
-#' @param Flt max fishing fleet number (3)
-#' @param asel selectivity-at-age matrix
+#' @param dat.list list with weight-at-age matrix, selectivity-at-age matrix, number of ages, and number of fishing fleets
 #' @param year current year in simulation
 #' @keywords biomass-at-age
 #' @export
 #' @examples
-#' simBatage()
 #'
-simBatage <- function(N, Flt, asel, year){
+#'
+simBatage <- function(N, dat.list, year){
+  #Flt is the max = 3
+  #asel is the age selectivity matrix
 
+  wtatage <- dat.list$wtatage
+  asel <- dat.list$age_selectivity
+  Nages <- dat.list$Nages
+  Flt <- dat.list$N_fishfleet
+  b.age <- matrix(data = NA, nrow = 3, ncol = 15)
   for(fleet in 1:Flt){
-    for(age in 1:Nages){
+    for(age in 1:Nages){#for fishery dependent surveys
       if(fleet < 3){
 
         b.age[fleet,age] <- N[year,age+1] *wtatage[,age] * asel[fleet,age]
@@ -181,16 +178,19 @@ simBatage <- function(N, Flt, asel, year){
 #' Calculates biomass at age for fishery independent surveys
 #'
 #' @param Nlen matrix with numbers at length
-#' @param Flt number of fleets (2)
-#' @param lsel selectivity-at-length matrix
+#' @param dat.list list with the number of fishery independent surveys and a selectivity-at-length matrix
 #' @param year current year in simulation
 #' @keywords biomass-at-length
 #' @export
 #' @examples
-#' simBatlen()
 #'
-simBatlen <- function(Nlen, Flt, lsel, year){
+#'
+simBatlen <- function(Nlen, dat.list, year){
+  #Flt is the number of fishery-independent surveys
 
+  Flt <- dat.list$N_survey
+  lsel <- dat.list$length_selectivity
+  b.len <- matrix(NA, nrow = 2, ncol =12)
   for(fleet in 1:Flt){
     for(len in 1:ncol(Nlen)){
       if(fleet == 1){
@@ -208,13 +208,15 @@ simBatlen <- function(Nlen, Flt, lsel, year){
 #'
 #' @param catch.by.fleet matrix with catches at age by fleet
 #' @param year current year in simulation
-#' @param ageerror vector of error for each age
+#' @param dat.list list with vector of error for each age and vector of the years in simulation
 #' @keywords age composition
 #' @export
 #' @examples
-#' simAgecomp()
 #'
-simAgecomp <-  function(catch.by.fleet, year, ageerror){
+#'
+simAgecomp <-  function(catch.by.fleet, year, dat.list){
+  year.seq <- dat.list$year_seq
+  ageerror <- dat.list$ageerror
   agecompinfo.list<- list(
     Yr = rep(floor(year.seq[year]),3),
     Seas = rep(1,3),
@@ -244,23 +246,32 @@ simAgecomp <-  function(catch.by.fleet, year, ageerror){
 
 #' Generates indices of abundance based on simulated catch
 #'
-#' @param q vector of catchability values for each fleet
+#' @param dat.list list with catchability and CPUE SE values
 #' @param b vector of vulnerable biomass for each fleet
-#' @param se error for each index
 #' @param year current year in simulation
 #' @keywords index of abundance
 #' @export
 #' @examples
-#' simIndex()
 #'
-simIndex <- function(q,b,se,year){
+#'
+simIndex <- function(dat.list,b,year){
 
+  q <- dat.list$q
+  se <- dat.list$CPUE_se
   for(fleet in 1:6){
 
-    I[year, fleet] <- rlnorm(1,log(q[fleet]*b[fleet]),as.numeric(CPUE.se[fleet,2]^2))
+    I[year, fleet] <- rlnorm(1,log(q[fleet]*b[fleet]),as.numeric(se[fleet,2]^2))
 
   }
   return(I[year,])
+}
+
+
+simCompetition <- function(r, beta, N, sigma, K, Nj){
+
+  Ni <- sum(N[year,-1])
+  exp.N <- r*Ni*(1-(K - Ni - beta*Nj)/K)
+
 }
 
 #' Generates competition index based on relative Red Snapper abundances
@@ -274,9 +285,9 @@ simIndex <- function(q,b,se,year){
 #' @keywords competition, index
 #' @export
 #' @examples
-#' simCompetition()
 #'
-simCompetition <- function(r, beta, N, sigma, K, Nj){
+#'
+simCompetition <- function(r, beta, N, sigma, K, Nj, year){
 
   Ni <- sum(N[year,-1])
   exp.N <- r*Ni*(1-(K - Ni - beta*Nj)/K)

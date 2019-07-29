@@ -13,7 +13,7 @@ find_spr(dir.)
 Find the SPR input value for forecast.ss file to achieve SPR 30%
 }
 \examples{
-find_spr()
+
 
 
 }

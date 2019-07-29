@@ -4,15 +4,19 @@
 \alias{getRP}
 \title{Get reference point values after assessment run}
 \usage{
-getRP(rep.)
+getRP(rep., dat.list, year)
 }
 \arguments{
 \item{rep.}{report file from SS assessment}
+
+\item{dat.list}{contains sequence of years in simulation}
+
+\item{year}{current year in simulation}
 }
 \description{
 Get reference point values after assessment run
 }
 \examples{
-getRP()
+
 
 }

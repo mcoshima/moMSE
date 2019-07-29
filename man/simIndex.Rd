@@ -4,14 +4,12 @@
 \alias{simIndex}
 \title{Generates indices of abundance based on simulated catch}
 \usage{
-simIndex(q, b, se, year)
+simIndex(dat.list, b, year)
 }
 \arguments{
-\item{q}{vector of catchability values for each fleet}
+\item{dat.list}{list with catchability and CPUE SE values}
 
 \item{b}{vector of vulnerable biomass for each fleet}
-
-\item{se}{error for each index}
 
 \item{year}{current year in simulation}
 }
@@ -19,7 +17,7 @@ simIndex(q, b, se, year)
 Generates indices of abundance based on simulated catch
 }
 \examples{
-simIndex()
+
 
 }
 \keyword{abundance}

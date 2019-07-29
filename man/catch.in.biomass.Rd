@@ -4,10 +4,10 @@
 \alias{catch.in.biomass}
 \title{Converts catch in numbers to catch in biomass}
 \usage{
-catch.in.biomass(sel, N, year, z, f.by.fleet)
+catch.in.biomass(dat.list, N, year, z, f.by.fleet)
 }
 \arguments{
-\item{sel}{Selectivity-at-age matrix}
+\item{dat.list}{Contains selectivity-at-age matrix and weight-at-age matrix}
 
 \item{N}{matrix with numbers at age}
 
@@ -21,7 +21,7 @@ catch.in.biomass(sel, N, year, z, f.by.fleet)
 Converts catch in numbers to catch in biomass
 }
 \examples{
-catch.in.biomass()
+
 
 }
 \keyword{catch}

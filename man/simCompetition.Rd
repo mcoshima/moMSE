@@ -4,7 +4,7 @@
 \alias{simCompetition}
 \title{Generates competition index based on relative Red Snapper abundances}
 \usage{
-simCompetition(r, beta, N, sigma, K, Nj)
+simCompetition(r, beta, N, sigma, K, Nj, year)
 }
 \arguments{
 \item{r}{rate of population growth}
@@ -23,7 +23,7 @@ simCompetition(r, beta, N, sigma, K, Nj)
 Generates competition index based on relative Red Snapper abundances
 }
 \examples{
-simCompetition()
+
 
 }
 \keyword{competition,}

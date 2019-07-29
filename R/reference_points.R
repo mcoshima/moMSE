@@ -4,7 +4,7 @@
 #' @keywords SPR
 #' @export
 #' @examples
-#' find_spr()
+#'
 #'
 #'
 find_spr <- function(dir.) {
@@ -86,12 +86,15 @@ find_spr <- function(dir.) {
 #' Get reference point values after assessment run
 #'
 #' @param rep. report file from SS assessment
+#' @param dat.list contains sequence of years in simulation
+#' @param year current year in simulation
 #' @export
 #' @examples
-#' getRP()
 #'
-getRP <- function(rep.){
+#'
+getRP <- function(rep., dat.list, year){
 
+  year.seq <- dat.list$year_seq
   rp.df <- as.data.frame(matrix(data = NA, nrow = 1, ncol = 10))
   colnames(rp.df) <- c("SSB0",
                        "F_cur",

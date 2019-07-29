@@ -28,7 +28,7 @@ dat.update(year, dat., agecomp.list, I, .datcatch, comp.I, dir.,
 This takes simulated data from the operating model pop dynamics and adds it in the correct format to the .dat file for SS.
 }
 \examples{
-dat.update()
+
 }
 \keyword{SS}
 \keyword{data,}

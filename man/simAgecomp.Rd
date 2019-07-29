@@ -4,20 +4,20 @@
 \alias{simAgecomp}
 \title{Generates age composition data from simulated catches}
 \usage{
-simAgecomp(catch.by.fleet, year, ageerror)
+simAgecomp(catch.by.fleet, year, dat.list)
 }
 \arguments{
 \item{catch.by.fleet}{matrix with catches at age by fleet}
 
 \item{year}{current year in simulation}
 
-\item{ageerror}{vector of error for each age}
+\item{dat.list}{list with vector of error for each age and vector of the years in simulation}
 }
 \description{
 Generates age composition data from simulated catches
 }
 \examples{
-simAgecomp()
+
 
 }
 \keyword{age}

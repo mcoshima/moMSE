@@ -4,14 +4,12 @@
 \alias{simBatage}
 \title{Calculates biomass at age for fishery dependent surveys}
 \usage{
-simBatage(N, Flt, asel, year)
+simBatage(N, dat.list, year)
 }
 \arguments{
 \item{N}{matrix with numbers at age}
 
-\item{Flt}{max fishing fleet number (3)}
-
-\item{asel}{selectivity-at-age matrix}
+\item{dat.list}{list with weight-at-age matrix, selectivity-at-age matrix, number of ages, and number of fishing fleets}
 
 \item{year}{current year in simulation}
 }
@@ -19,7 +17,7 @@ simBatage(N, Flt, asel, year)
 Calculates biomass at age for fishery dependent surveys
 }
 \examples{
-simBatage()
+
 
 }
 \keyword{biomass-at-age}

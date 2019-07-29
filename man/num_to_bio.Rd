@@ -5,12 +5,12 @@
 \title{Converts numbers-at-age to biomass-at-age or vice versa.
 Inputs need to be a dataframe, not a matrix.}
 \usage{
-num_to_bio(df, wtatage, Natage = T, age0 = F)
+num_to_bio(df, dat.list, Natage = T, age0 = F)
 }
 \arguments{
 \item{df}{dataframe of values you are converting}
 
-\item{wtatage}{matrix of weights at age}
+\item{dat.list}{list that contains matrix of weights at age}
 
 \item{Natage}{default is TRUE, T converts N-at-age to biomass, F converts B-at-age to numbers}
 
@@ -21,7 +21,7 @@ Converts numbers-at-age to biomass-at-age or vice versa.
 Inputs need to be a dataframe, not a matrix.
 }
 \examples{
-num_to_bio()
+
 
 }
 \keyword{biomass-at-age}

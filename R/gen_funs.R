@@ -10,7 +10,7 @@
 #' @keywords split, recombine
 #' @export
 #' @examples
-#' split.recombine()
+#'
 
 split.recombine <- function(df1, df2, ind, N){
 
@@ -40,7 +40,7 @@ split.recombine <- function(df1, df2, ind, N){
 #' @keywords random, discrete
 #' @export
 #' @examples
-#' rand_intvect()
+#'
 
 rand_intvect <- function(N, M, sd = 1, pos.only = TRUE) {
   vec <- rnorm(N, M/N, sd)
@@ -67,7 +67,7 @@ rand_intvect <- function(N, M, sd = 1, pos.only = TRUE) {
 #' @keywords random, continuous
 #' @export
 #' @examples
-#' rand_vect_cont()
+#'
 
 rand_vect_cont <- function(N, M, sd = 1) {
   vec <- rlnorm(N, M/N, sd)

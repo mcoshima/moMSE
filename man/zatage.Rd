@@ -4,12 +4,12 @@
 \alias{zatage}
 \title{Calcualte total mortality at age}
 \usage{
-zatage(M, sel, f.by.fleet)
+zatage(dat.list, year, f.by.fleet)
 }
 \arguments{
-\item{M}{natural mortality at age, matrix or df}
+\item{dat.list}{Contains natural mortality at age, matrix or df and selectivity-at-age matrix}
 
-\item{sel}{matrix of selectivities at age for each fleet}
+\item{year}{current year}
 
 \item{f.by.fleet}{Fishing mortality by fleet for year y}
 }
@@ -17,7 +17,7 @@ zatage(M, sel, f.by.fleet)
 Calcualte total mortality at age
 }
 \examples{
-zatage()
+
 
 }
 \keyword{mortality}

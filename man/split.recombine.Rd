@@ -20,7 +20,7 @@ This is a generic function to split and recombine dataframes based on common att
 I use this for spliting sections of the data files from SS by fleet, adding in the new data, and then recombining everything into the original format.
 }
 \examples{
-split.recombine()
+
 }
 \keyword{recombine}
 \keyword{split,}
