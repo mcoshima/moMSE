@@ -1,6 +1,7 @@
 #' This takes simulated data from the operating model pop dynamics and adds it in the correct format to the .dat file for SS.
 #'
 #' @param year last year in sequence of new data
+#' @param dat.list list that has the sequence of years
 #' @param .dat data file that needs to be updated
 #' @param agecomp.list simulated age comps from catch
 #' @param I simulated indices of abundance for each fleet
@@ -12,9 +13,9 @@
 #' @export
 #' @examples
 #'
-dat.update <- function(year, dat., agecomp.list, I, .datcatch, comp.I, dir., write = T){
+dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I, dir., write = T){
 
-  year.seq <- seq(2014, 2014+50, by = .5)
+  year.seq <- dat.list$year_seq
   yr <- floor(year.seq[year])
   rows <- seq(year-9,year) #rows from the past 4 years
 
