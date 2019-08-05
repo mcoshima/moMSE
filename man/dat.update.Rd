@@ -4,11 +4,13 @@
 \alias{dat.update}
 \title{This takes simulated data from the operating model pop dynamics and adds it in the correct format to the .dat file for SS.}
 \usage{
-dat.update(year, dat., agecomp.list, I, .datcatch, comp.I, dir.,
+dat.update(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I, dir.,
   write = T)
 }
 \arguments{
 \item{year}{last year in sequence of new data}
+
+\item{dat.list}{list that has the sequence of years}
 
 \item{agecomp.list}{simulated age comps from catch}
 
