@@ -137,7 +137,7 @@ getRP <- function(rep., dat.list, year){
     pull()
 
   rp.df$SSB_cur <-  rep.$derived_quants %>%
-    filter(str_detect(Label, "SSB_2018")) %>%
+    filter(str_detect(Label, paste0("SSB_", floor(year.seq[year])))) %>%
     pull(Value)
 
   MSST <- (1-.25)*rp.df$SSB_equ
