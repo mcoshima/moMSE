@@ -4,7 +4,7 @@
 \alias{catch.in.number}
 \title{Calculates numbers at age of catch}
 \usage{
-catch.in.number(dat.list, N, year, z, f.by.fleet)
+catch.in.number(dat.list, N, year, z, f.by.fleet, se)
 }
 \arguments{
 \item{dat.list}{Contains selectivity-at-age matrix of fisheries and catch SE}
@@ -21,9 +21,5 @@ catch.in.number(dat.list, N, year, z, f.by.fleet)
 }
 \description{
 Calculates numbers at age of catch
-}
-\examples{
-
-
 }
 \keyword{catch}

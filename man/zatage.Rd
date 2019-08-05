@@ -16,8 +16,4 @@ zatage(dat.list, year, f.by.fleet)
 \description{
 Calcualte total mortality at age
 }
-\examples{
-
-
-}
 \keyword{mortality}

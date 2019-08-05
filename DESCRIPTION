@@ -2,19 +2,12 @@ Package: moMSE
 Type: Package
 Title: Functions for Running a Management Strategy Evaluation
 Version: 0.1.0
-Author: Meg Oshima
-Maintainer: The package maintainer <megumi.oshima@usm.edu>
+Authors@R: person("Meg", "Oshima", email = "megumi.oshima@usm.edu", role = c("aut", "cre"))
 Description: These are custom functions for running my Vermilion Snapper MSE. Not intended for general use but feel free to use any code that is helpful.
-License: NA
+Depends: R (>= 3.2.0), dplyr, ggplot2, here, purrr, r4ss, reshape2, RPushbullet, stringr
+License: Unlimited
 Encoding: UTF-8
 LazyData: true
+Suggests: testthat
 RoxygenNote: 6.1.1
-Imports: 
-    dplyr,
-    here,
-    ggplot2,
-    r4ss,
-    RPushbullet,
-    stringr,
-    purrr,
-    reshape2
+

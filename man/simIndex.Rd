@@ -16,10 +16,6 @@ simIndex(dat.list, b, year)
 \description{
 Generates indices of abundance based on simulated catch
 }
-\examples{
-
-
-}
 \keyword{abundance}
 \keyword{index}
 \keyword{of}

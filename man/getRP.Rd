@@ -16,7 +16,3 @@ getRP(rep., dat.list, year)
 \description{
 Get reference point values after assessment run
 }
-\examples{
-
-
-}

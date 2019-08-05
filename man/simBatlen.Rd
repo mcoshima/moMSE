@@ -16,8 +16,4 @@ simBatlen(Nlen, dat.list, year)
 \description{
 Calculates biomass at age for fishery independent surveys
 }
-\examples{
-
-
-}
 \keyword{biomass-at-length}

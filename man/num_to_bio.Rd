@@ -20,9 +20,5 @@ num_to_bio(df, dat.list, Natage = T, age0 = F)
 Converts numbers-at-age to biomass-at-age or vice versa.
 Inputs need to be a dataframe, not a matrix.
 }
-\examples{
-
-
-}
 \keyword{biomass-at-age}
 \keyword{numbers-at-age,}

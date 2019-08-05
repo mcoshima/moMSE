@@ -6,7 +6,6 @@
 #' @param f.by.fleet Fishing mortality by fleet for year y
 #' @keywords mortality
 #' @export
-#' @examples
 #'
 #'
 zatage <- function(dat.list,year,f.by.fleet){
@@ -32,7 +31,6 @@ zatage <- function(dat.list,year,f.by.fleet){
 #' @param f.by.fleet Fishing mortality by fleet for year y
 #' @keywords catch
 #' @export
-#' @examples
 #'
 #'
 catch.in.biomass <- function(dat.list,N,year,z,f.by.fleet){
@@ -62,11 +60,10 @@ catch.in.biomass <- function(dat.list,N,year,z,f.by.fleet){
 #' @param se vector of log(catch error)
 #' @keywords catch
 #' @export
-#' @examples
 #'
 #'
 
-catch.in.number <- function(dat.list,N,year,z,f.by.fleet){
+catch.in.number <- function(dat.list,N,year,z,f.by.fleet,se){
 
   sel <- dat.list$age_selectivity
   se <- dat.list$catch_se
@@ -91,7 +88,6 @@ catch.in.number <- function(dat.list,N,year,z,f.by.fleet){
 #' @param age0 defualt is FALSE, will exclude age0 in calculations, TRUE will include them
 #' @keywords numbers-at-age, biomass-at-age
 #' @export
-#' @examples
 #'
 #'
 num_to_bio <- function(df, dat.list, Natage = T, age0 = F){
@@ -146,7 +142,6 @@ num_to_bio <- function(df, dat.list, Natage = T, age0 = F){
 #' @param year current year in simulation
 #' @keywords biomass-at-age
 #' @export
-#' @examples
 #'
 #'
 simBatage <- function(N, dat.list, year){
@@ -182,7 +177,6 @@ simBatage <- function(N, dat.list, year){
 #' @param year current year in simulation
 #' @keywords biomass-at-length
 #' @export
-#' @examples
 #'
 #'
 simBatlen <- function(Nlen, dat.list, year){
@@ -211,7 +205,6 @@ simBatlen <- function(Nlen, dat.list, year){
 #' @param dat.list list with vector of error for each age and vector of the years in simulation
 #' @keywords age composition
 #' @export
-#' @examples
 #'
 #'
 simAgecomp <-  function(catch.by.fleet, year, dat.list){
@@ -251,8 +244,6 @@ simAgecomp <-  function(catch.by.fleet, year, dat.list){
 #' @param year current year in simulation
 #' @keywords index of abundance
 #' @export
-#' @examples
-#'
 #'
 simIndex <- function(dat.list,b,year){
 
@@ -282,9 +273,9 @@ simCompetition <- function(r, beta, N, sigma, K, Nj){
 #' @param sigma standard deviation
 #' @param K carrying capacity
 #' @param Nj abundance of species j
+#' @param year current year
 #' @keywords competition, index
 #' @export
-#' @examples
 #'
 #'
 simCompetition <- function(r, beta, N, sigma, K, Nj, year){

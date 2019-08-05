@@ -5,18 +5,17 @@
 #' I use this for spliting sections of the data files from SS by fleet, adding in the new data, and then recombining everything into the original format.
 #' @param df1 first dataframe you want to split
 #' @param df2 second dataframe you want to split
-#' @param ind index attribute you want to group/split dataframes by
+#' @param ind column name of index attribute you want to group and split dataframes by
 #' @param N number of individual indices
 #' @keywords split, recombine
 #' @export
-#' @examples
 #'
 
-split.recombine <- function(df1, df2, ind, N){
+splt.recombine <- function(df1, df2, ind, N){
 
-  split.dat <- df1 %>% split(.[,ind])
+  split.dat <- df1 %>% group_by(ind) %>% group_split()
 
-  split.new <- df2 %>% split(.[,ind])
+  split.new <- df2 %>% group_by(ind) %>% group_split()
 
   for(i in 1:N){
 
@@ -39,7 +38,6 @@ split.recombine <- function(df1, df2, ind, N){
 #' @param pos.only should the vector contain only positive values, default is TRUE
 #' @keywords random, discrete
 #' @export
-#' @examples
 #'
 
 rand_intvect <- function(N, M, sd = 1, pos.only = TRUE) {
@@ -66,7 +64,6 @@ rand_intvect <- function(N, M, sd = 1, pos.only = TRUE) {
 #' @param sd sd of values, default is 1
 #' @keywords random, continuous
 #' @export
-#' @examples
 #'
 
 rand_vect_cont <- function(N, M, sd = 1) {

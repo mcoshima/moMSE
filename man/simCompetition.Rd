@@ -18,13 +18,11 @@ simCompetition(r, beta, N, sigma, K, Nj, year)
 \item{K}{carrying capacity}
 
 \item{Nj}{abundance of species j}
+
+\item{year}{current year}
 }
 \description{
 Generates competition index based on relative Red Snapper abundances
-}
-\examples{
-
-
 }
 \keyword{competition,}
 \keyword{index}

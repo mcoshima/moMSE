@@ -12,6 +12,8 @@ dat.update(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I, dir.,
 
 \item{dat.list}{list that has the sequence of years}
 
+\item{dat.}{data file that needs to be updated}
+
 \item{agecomp.list}{simulated age comps from catch}
 
 \item{I}{simulated indices of abundance for each fleet}
@@ -23,14 +25,9 @@ dat.update(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I, dir.,
 \item{dir.}{directory of where to read and write new files from/to}
 
 \item{write}{default set to TRUE, if FALSE, new .dat file will not be saved (won't overwrite the old file)}
-
-\item{.dat}{data file that needs to be updated}
 }
 \description{
 This takes simulated data from the operating model pop dynamics and adds it in the correct format to the .dat file for SS.
-}
-\examples{
-
 }
 \keyword{SS}
 \keyword{data,}

@@ -16,9 +16,5 @@ simAgecomp(catch.by.fleet, year, dat.list)
 \description{
 Generates age composition data from simulated catches
 }
-\examples{
-
-
-}
 \keyword{age}
 \keyword{composition}

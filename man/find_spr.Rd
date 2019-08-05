@@ -2,19 +2,14 @@
 % Please edit documentation in R/reference_points.R
 \name{find_spr}
 \alias{find_spr}
-\title{Find the SPR input value for forecast.ss file to achieve SPR 30%}
+\title{Find the SPR input value for forecast.ss file to achieve SPR 30\%}
 \usage{
 find_spr(dir.)
 }
 \arguments{
-\item{dir.}{directory of where the original and new forecast file are. Also sends notifications to phone (pbpost) after each run and when 30% is reached.}
+\item{dir.}{directory of where the original and new forecast file are. Also sends notifications to phone (pbpost) after each run and when 30\% is reached.}
 }
 \description{
-Find the SPR input value for forecast.ss file to achieve SPR 30%
-}
-\examples{
-
-
-
+Find the SPR input value for forecast.ss file to achieve SPR 30\%
 }
 \keyword{SPR}

@@ -2,7 +2,7 @@
 #'
 #' @param year last year in sequence of new data
 #' @param dat.list list that has the sequence of years
-#' @param .dat data file that needs to be updated
+#' @param dat. data file that needs to be updated
 #' @param agecomp.list simulated age comps from catch
 #' @param I simulated indices of abundance for each fleet
 #' @param .datcatch A dataframe with the catch for each fishing fleet in the correct units (biomass and numbers)
@@ -11,7 +11,6 @@
 #' @param write default set to TRUE, if FALSE, new .dat file will not be saved (won't overwrite the old file)
 #' @keywords SS data, update
 #' @export
-#' @examples
 #'
 dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I, dir., write = T){
 
@@ -111,7 +110,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     rename(index = variable,
            obs = value)
 
-  new.cpue <- split.recombine(dat.$CPUE, new.index, 3, N = length(unique(new.index$index)))
+  new.cpue <- splt.recombine(dat.$CPUE, new.index, index, N = length(unique(new.index$index)))
 
   dat.$CPUE <- new.cpue[which(new.cpue$obs > 0),]
 
@@ -127,7 +126,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
 
     sub.acomps <- compact(agecomp.list[rows])
     new.acomp <- do.call(rbind, sub.acomps)
-    agecomp <- split.recombine(dat.$agecomp, new.acomp, 3, N=3)
+    agecomp <- splt.recombine(dat.$agecomp, new.acomp, 3, N=3)
 
     dat.$agecomp <- agecomp %>%
       group_by(FltSvy) %>%

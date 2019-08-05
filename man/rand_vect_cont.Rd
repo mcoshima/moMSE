@@ -16,8 +16,5 @@ rand_vect_cont(N, M, sd = 1)
 \description{
 This creates a vector of N numbers that add up to M (can be decimals).
 }
-\examples{
-
-}
 \keyword{continuous}
 \keyword{random,}

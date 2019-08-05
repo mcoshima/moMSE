@@ -1,9 +1,8 @@
-#' Find the SPR input value for forecast.ss file to achieve SPR 30%
+#' Find the SPR input value for forecast.ss file to achieve SPR 30\%
 #'
-#' @param dir. directory of where the original and new forecast file are. Also sends notifications to phone (pbpost) after each run and when 30% is reached.
+#' @param dir. directory of where the original and new forecast file are. Also sends notifications to phone (pbpost) after each run and when 30\% is reached.
 #' @keywords SPR
 #' @export
-#' @examples
 #'
 #'
 #'
@@ -89,8 +88,6 @@ find_spr <- function(dir.) {
 #' @param dat.list contains sequence of years in simulation
 #' @param year current year in simulation
 #' @export
-#' @examples
-#'
 #'
 getRP <- function(rep., dat.list, year){
 

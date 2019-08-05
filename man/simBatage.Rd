@@ -16,8 +16,4 @@ simBatage(N, dat.list, year)
 \description{
 Calculates biomass at age for fishery dependent surveys
 }
-\examples{
-
-
-}
 \keyword{biomass-at-age}

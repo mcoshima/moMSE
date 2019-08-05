@@ -20,8 +20,4 @@ catch.in.biomass(dat.list, N, year, z, f.by.fleet)
 \description{
 Converts catch in numbers to catch in biomass
 }
-\examples{
-
-
-}
 \keyword{catch}

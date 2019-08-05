@@ -18,8 +18,5 @@ rand_intvect(N, M, sd = 1, pos.only = TRUE)
 \description{
 This creates a vector of N whole numbers that add up to M.
 }
-\examples{
-
-}
 \keyword{discrete}
 \keyword{random,}
