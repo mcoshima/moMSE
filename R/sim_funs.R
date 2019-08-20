@@ -57,13 +57,12 @@ catch.in.biomass <- function(dat.list,N,year,z,f.by.fleet){
 #' @param year current year in simulation
 #' @param z total mortality at age vector
 #' @param f.by.fleet Fishing mortality by fleet for year y
-#' @param se vector of log(catch error)
 #' @keywords catch
 #' @export
 #'
 #'
 
-catch.in.number <- function(dat.list,N,year,z,f.by.fleet,se){
+catch.in.number <- function(dat.list,N,year,z,f.by.fleet){
 
   sel <- dat.list$age_selectivity
   se <- dat.list$catch_se
@@ -241,20 +240,20 @@ simAgecomp <-  function(catch.by.fleet, year, dat.list){
 #'
 #' @param dat.list list with catchability and CPUE SE values
 #' @param b vector of vulnerable biomass for each fleet
-#' @param year current year in simulation
 #' @keywords index of abundance
 #' @export
 #'
-simIndex <- function(dat.list,b,year){
+simIndex <- function(dat.list,b){
 
   q <- dat.list$q
   se <- dat.list$CPUE_se
+  I <- matrix(data = NA, nrow =1, ncol = 6)
   for(fleet in 1:6){
 
-    I[year, fleet] <- rlnorm(1,log(q[fleet]*b[fleet]),as.numeric(se[fleet,2]^2))
+    I[, fleet] <- rlnorm(1,log(q[fleet]*b[fleet]),as.numeric(se[fleet,2]^2))
 
   }
-  return(I[year,])
+  return(I)
 }
 
 
