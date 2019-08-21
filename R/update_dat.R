@@ -14,7 +14,7 @@
 #'
 dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I, dir., write = T){
 
-  year.seq <- dat.list$year_seq
+  year.seq <- as.numeric(dat.list$year_seq)
   yr <- floor(year.seq[year])
   rows <- seq(year-9,year) #rows from the past 4 years
 
