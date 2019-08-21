@@ -27,7 +27,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     na.omit() %>%
     mutate(
       COMP = rep(0.001,1),
-      year = seq(yr-4,yr),
+      year = seq(yr-4,yr, by=1),
       seas = rep(1,5)) %>%
     rename(CM_E = V1,
            CM_W = V2,
@@ -53,7 +53,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     select(4) %>%
     na.omit() %>%
     mutate(
-      Yr = seq(yr-4,yr),
+      Yr = seq(yr-4,yr, by=1),
       Seas = rep(1,5),
       Flt = rep(-4,5),
       Discard = V4,
@@ -97,7 +97,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
            "5" = obs) %>%
     melt() %>%
     mutate(
-      year = rep(seq(yr-4,yr),7),
+      year = rep(seq(yr-4,yr,by=1),7),
       seas = rep(1,35),
       variable = as.factor(variable),
       se_log = c(rep(CPUE.se$SE, each = 5), rep(0.01, 5))
