@@ -26,7 +26,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     slice(rows)  %>%
     na.omit() %>%
     mutate(
-      COMP = rep(0.001,5),
+      COMP = rep(0.001,length(rows)/2),
       year = seq(yr-4,yr),
       seas = rep(1,5)) %>%
     rename(CM_E = V1,
