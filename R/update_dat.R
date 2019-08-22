@@ -12,11 +12,15 @@
 #' @keywords SS data, update
 #' @export
 #'
+
 dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I, dir., write = T){
 
   year.seq <- as.numeric(dat.list$year_seq)
   yr <- floor(year.seq[year])
   rows <- seq(year-9,year) #rows from the past 4 years
+  yrs. <- year.seq[rows]
+  yrs. <- yrs.[which((yrs. %% 1) %in% 0)]
+
 
   #Add catch for past 5 years
 
@@ -27,7 +31,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     na.omit() %>%
     mutate(
       COMP = rep(0.001,1),
-      year = seq(yr-4,yr, by=1),
+      year = yrs.,
       seas = rep(1,5)) %>%
     rename(CM_E = V1,
            CM_W = V2,
@@ -37,7 +41,6 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
            CM_E = ifelse(CM_E > 0, CM_E, 0.001),
            CM_W = ifelse(CM_W > 0, CM_W, 0.001),
            REC = ifelse(REC > 0, REC, 0.001))
-
 
   dat.$catch <- rbind(dat.$catch, new.catch)
 
@@ -53,7 +56,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     select(4) %>%
     na.omit() %>%
     mutate(
-      Yr = seq(yr-4,yr, by=1),
+      Yr = yrs.,
       Seas = rep(1,5),
       Flt = rep(-4,5),
       Discard = V4,
@@ -76,12 +79,11 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
 
   #Add CPUE
 
-  comp.index <- comp.I %>%
+  comp.index <- proj.index %>%
     filter(Year > yr - 5 & Year <= yr) %>%
     select(-Year) %>%
     rename("obs" = RS_relative) %>%
     as.data.frame()
-
 
   new.index <-  I %>%
     as.data.frame() %>%
@@ -97,7 +99,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
            "5" = obs) %>%
     melt() %>%
     mutate(
-      year = rep(seq(yr-4,yr,by=1),7),
+      year = rep(yrs.,7),
       seas = rep(1,35),
       variable = as.factor(variable),
       se_log = c(rep(CPUE.se$SE, each = 5), rep(0.01, 5))
@@ -110,7 +112,8 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     rename(index = variable,
            obs = value)
 
-  new.cpue <- splt.recombine(dat.$CPUE, new.index, index, N = length(unique(new.index$index)))
+
+  new.cpue <- splt.recombine(dat.$CPUE, new.index, 'index', N = length(unique(new.index$index)))
 
   dat.$CPUE <- new.cpue[which(new.cpue$obs > 0),]
 
@@ -126,7 +129,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
 
     sub.acomps <- compact(agecomp.list[rows])
     new.acomp <- do.call(rbind, sub.acomps)
-    agecomp <- splt.recombine(dat.$agecomp, new.acomp, 3, N=3)
+    agecomp <- splt.recombine(dat.$agecomp, new.acomp, 'FltSvy', N=3)
 
     dat.$agecomp <- agecomp %>%
       group_by(FltSvy) %>%
