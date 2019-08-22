@@ -113,7 +113,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
            obs = value)
 
 
-  new.cpue <- splt.recombine(dat.$CPUE, new.index, 'index', N = length(unique(new.index$index)))
+  new.cpue <- splt.recombine(dat.$CPUE, new.index, 'index', N = 7)
 
   dat.$CPUE <- new.cpue[which(new.cpue$obs > 0),]
 
