@@ -79,7 +79,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
 
   #Add CPUE
 
-  comp.index <- proj.index %>%
+  comp.index <- comp.I %>%
     filter(Year > yr - 5 & Year <= yr) %>%
     select(-Year) %>%
     rename("obs" = RS_relative) %>%
