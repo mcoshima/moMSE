@@ -4,10 +4,10 @@
 #' @keywords SPR
 #' @export
 #'
-#'
-#'
 find_spr <- function(dir.) {
-  rep.file <- SS_output(dir.)
+  rep.file <- SS_output(dir., verbose = F, printstats = F)
+
+  print("Rep file read in")
 
   SSB0 <- rep.file$timeseries %>%
     slice(1) %>%
@@ -26,7 +26,7 @@ find_spr <- function(dir.) {
   fcast_spr <- as.numeric(strsplit(fcast.[7], "#")[[1]][1])
   spr.seq <- switch(
     delta,
-    "0" = seq(fcast_spr, fcast_spr - .15, by = -.01),
+    "1" = seq(fcast_spr, fcast_spr - .15, by = -.01),
     "-1" = seq(fcast_spr, fcast_spr + .15, by = .01)
   )
 
