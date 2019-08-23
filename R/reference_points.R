@@ -5,7 +5,7 @@
 #' @export
 #'
 find_spr <- function(dir.) {
-  rep.file <- SS_output(dir., forecast = FALSE, verbose = F, printstats = F)
+  rep.file <- SS_output(dir., forecast = FALSE, verbose = F, printstats = F, forefile = "Forecast-report.sso", covar = F)
 
   print("Rep file read in")
 
