@@ -5,7 +5,7 @@
 #' @export
 #'
 find_spr <- function(dir.) {
-  rep.file <- SS_output(dir., verbose = F, printstats = F)
+  rep.file <- SS_output(dir., forecast = FALSE, verbose = F, printstats = F)
 
   print("Rep file read in")
 
@@ -27,13 +27,17 @@ find_spr <- function(dir.) {
   spr.seq <- switch(
     delta,
     "1" = seq(fcast_spr, fcast_spr - .15, by = -.01),
-    "-1" = seq(fcast_spr, fcast_spr + .15, by = .01)
+    "-1" = seq(fcast_spr, fcast_spr + .15, by = .01),
+    "0" = NA
   )
 
   print(spr.seq)
 
   msg1 <- "SS run is complete and new report file was read in."
 
+  if(length(spr.seq)==0){
+    print("Already at spr30")
+  }else{
   for (i in spr.seq) {
     print(i)
     fcast. <- readLines(paste0(dir., "/Forecast.ss"), -1)
@@ -77,7 +81,7 @@ find_spr <- function(dir.) {
 
     }
 
-  }
+  } }
 
 }
 
