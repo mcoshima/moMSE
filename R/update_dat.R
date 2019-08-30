@@ -142,7 +142,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
   dat.$endyr <- yr
 
   if(write == T){
-    SS_writedat(dat., outfile = paste0(dir.,"/VS.dat"), version = "3.24", overwrite = T)
+    SS_writedat(dat., outfile = paste0(dir.,"/VS.dat"),  overwrite = T)
 
     ct. <- readLines(paste0(dir.,"/VS.ctl"),-1)
     ct.[83] <- paste(yr, "# last year of main recr_devs; forecast devs start in following year", sep = " ")

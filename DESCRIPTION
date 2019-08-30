@@ -4,7 +4,7 @@ Title: Functions for Running a Management Strategy Evaluation
 Version: 0.1.0
 Authors@R: person("Meg", "Oshima", email = "megumi.oshima@usm.edu", role = c("aut", "cre"))
 Description: These are custom functions for running my Vermilion Snapper MSE. Not intended for general use but feel free to use any code that is helpful.
-Depends: R (>= 3.2.0), dplyr, ggplot2, here, purrr, r4ss, reshape2, RPushbullet, stringr
+Depends: R (>= 3.2.0), here, r4ss, reshape2, RPushbullet, tidyr, dplyr, ggplot2, purrr, stringr
 License: Unlimited
 Encoding: UTF-8
 LazyData: true

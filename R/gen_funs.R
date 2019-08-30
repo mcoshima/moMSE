@@ -12,7 +12,6 @@
 #'
 
 splt.recombine <- function(df1, df2, ind, N){
-  require("dplyr")
 
   names <- df2 %>% select_(ind) %>% unique() %>% pull() %>% as.character()
 
