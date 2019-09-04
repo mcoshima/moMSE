@@ -73,3 +73,12 @@ rand_vect_cont <- function(N, M, sd = 1) {
   vec / sum(vec) * M
 }
 
+#' Extract multiple numbers from a character string
+#'
+#' @param string the character string containing numbers to extract
+#' @keywords numbers, character string
+#' @export
+#'
+Numextract <- function(string){
+  unlist(regmatches(string,gregexpr("\\-*[[:digit:]]+\\.*[[:digit:]]*",string)))
+}
