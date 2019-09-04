@@ -149,7 +149,7 @@ getRP <- function(rep., dat.list, year){
   #if achieved spr 30%
   rp.df$spr30 <- rp.df$SSB_equ/rp.df$SSB0
   #current bratio
-  rp.df$bratio <- rp.df$SSB_cur/rp.df$SSB0
+  rp.df$bratio <- rp.df$SSB_cur/rp.df$SSB_equ
   #current stock status compared to MSST
   rp.df$status_cur <- rp.df$SSB_cur/MSST
 
