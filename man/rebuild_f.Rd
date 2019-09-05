@@ -4,14 +4,10 @@
 \alias{rebuild_f}
 \title{Find the catch and f for time t_target required to rebuild stock}
 \usage{
-rebuild_f(forefile, nfishfleet, nareas, dir., dat.list, t_targ)
+rebuild_f(forefile, dir., dat.list, t_targ)
 }
 \arguments{
 \item{forefile}{full or relative path to forecast file}
-
-\item{nfishfleet}{number of fishing fleets}
-
-\item{nareas}{number of areas}
 
 \item{dir.}{directory to send new forecast file}
 

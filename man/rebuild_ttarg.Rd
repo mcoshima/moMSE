@@ -4,14 +4,10 @@
 \alias{rebuild_ttarg}
 \title{Find the time it takes to rebuild the stock once SSB is below 30\%}
 \usage{
-rebuild_ttarg(forefile, nfishfleet, nareas, dir., dat.list)
+rebuild_ttarg(forefile, dir., dat.list)
 }
 \arguments{
 \item{forefile}{full or relative path to forecast file}
-
-\item{nfishfleet}{number of fishing fleets}
-
-\item{nareas}{number of areas}
 
 \item{dir.}{directory to send new forecast file}
 

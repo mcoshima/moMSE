@@ -1,16 +1,16 @@
 #' Find the time it takes to rebuild the stock once SSB is below 30\%
 #'
 #' @param forefile full or relative path to forecast file
-#' @param nfishfleet number of fishing fleets
-#' @param nareas number of areas
 #' @param dir. directory to send new forecast file
 #' @param dat.list list with the sequence of years
 #' @keywords rebuild, t_target
 #' @export
 #'
-rebuild_ttarg <- function(forefile, nfishfleet, nareas, dir., dat.list){
+rebuild_ttarg <- function(forefile, dir., dat.list){
 
   gen <- 7
+  nfishfleet <- dat.list$N_fishfleet + 1
+  nareas <- dat.list$N_areas
   year.seq <- as.numeric(dat.list$year_seq)
   yr <- floor(year.seq[year])
 
@@ -25,7 +25,8 @@ rebuild_ttarg <- function(forefile, nfishfleet, nareas, dir., dat.list){
                              "Catch" = rep(0, length(years)))
   row.names(zero_catches) <- NULL
 
-  fcast.$Ncatch <- paste0(nrow(zero_catches), " # Number of forecast catch levels to input (else calc catch from forecast F)")
+  fcast.$Ncatch <- paste0(nrow(zero_catches),
+                          " # Number of forecast catch levels to input (else calc catch from forecast F)")
   fcast.$InputBasis <- paste0(99, " # basis for input Fcast catch: 2=dead catch; 3=retained catch; 99=input Hrate(F) (units are from fleetunits; note new codes in SSV3.20)")
   if(nrow(zero_catches) > 0){
     fcast.$ForeCatch <- print(zero_catches, row.names = F)
@@ -40,8 +41,8 @@ rebuild_ttarg <- function(forefile, nfishfleet, nareas, dir., dat.list){
     select(Label, Value) %>%
     filter(Value >= 0.299 & Value <= 0.31) %>%
     separate(Label, into = c("Label", "Year"), sep = "_") %>%
-    mutate(Year = as.numeric(Year)) #%>%
-  filter(Year >= yr)
+    mutate(Year = as.numeric(Year)) %>%
+    filter(Year >= yr)
 
   if(nrow(recovered) == 1){
     t_min <- recovered$Year - yr
@@ -58,11 +59,10 @@ rebuild_ttarg <- function(forefile, nfishfleet, nareas, dir., dat.list){
 }
 
 
+
 #' Find the catch and f for time t_target required to rebuild stock
 #'
 #' @param forefile full or relative path to forecast file
-#' @param nfishfleet number of fishing fleets
-#' @param nareas number of areas
 #' @param dir. directory to send new forecast file
 #' @param dat.list list with the sequence of years
 #' @param t_targ calculated by rebuild_ttarg, the number of years it will take to rebuild stock
@@ -70,8 +70,10 @@ rebuild_ttarg <- function(forefile, nfishfleet, nareas, dir., dat.list){
 #' @export
 #'
 
-rebuild_f <- function(forefile, nfishfleet, nareas, dir., dat.list, t_targ){
+rebuild_f <- function(forefile, dir., dat.list, t_targ){
 
+  nfishfleet <- dat.list$N_fishfleet + 1
+  nareas <- dat.list$N_areas
   fcast. <- SS_readforecast(forefile, Nfleets = nfishfleet, Nareas = nareas)
 
   fcast.$ForeCatch <- NULL
