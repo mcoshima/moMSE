@@ -146,3 +146,49 @@ rebuild_f <- function(forefile, dir., dat.list, t_targ){
 
 
 }
+
+
+
+#' Find the acceptable probability of going past the OFL (P*)
+#'
+#' @param Assess_info number for how much info is available for assessement
+#' @param OFL_uncert number describing the level of uncertainty acknowledged in the model
+#' @param Retro_pats number describing the retrospective patterns
+#' @param Environ number describing if environmental covariates were included in model
+#' @param min.risk the level of minimal risk (default at .3)
+#' @param max.risk the level of max risk (default at .5)
+#' @keywords rebuild, p-star
+#' @export
+#'
+p_star <- function(Assess_info = "2", OFL_uncert = "2", Retro_pats = "3", Environ = "3", min.risk = .3, max.risk = .5){
+
+  a <- switch(Assess_info,
+            "1" = 0,
+            "2" = .67,
+            "3" = 1.33,
+            "4" = 2)
+  b <- switch(OFL_uncert,
+            "1" = 0,
+            "2" = .67,
+            "3" = 1.33,
+            "4" = 2)
+  c <- switch (Retro_pats,
+             "1" = 0,
+             "2" = 1,
+             "3" = 2)
+  d <- switch(Environ,
+            "1" = 0,
+            "2" = 1,
+            "3" = 2)
+
+  a <- a * 1
+  b <- b * .33
+  c <- c * .33
+  d <- d * .33
+  Dim <- a + b + c + d
+  alpha <- -log(max.risk)
+  beta <- -((alpha + log(min.risk))/3.998)
+  p <- exp(-alpha - beta * Dim)
+
+  return(p)
+}
