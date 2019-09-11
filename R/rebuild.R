@@ -9,7 +9,7 @@
 rebuild_ttarg <- function(forefile, dir., dat.list){
 
   gen <- 7
-  nfishfleet <- as.numeric(dat.list$N_fishfleet) + 1
+  nfishfleet <- as.numeric(dat.list$N_fishfleet) + 2
   nareas <- dat.list$N_areas
   year.seq <- as.numeric(dat.list$year_seq)
   yr <- floor(year.seq[year])
