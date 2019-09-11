@@ -14,7 +14,7 @@ rebuild_ttarg <- function(forefile, dir., dat.list){
   year.seq <- as.numeric(dat.list$year_seq)
   yr <- floor(year.seq[year])
 
-  fcast. <- SS_readforecast(forefile, Nfleets = nfishfleet, Nareas = nareas)
+  fcast. <- SS_readforecast(forefile, Nfleets = as.numeric(nfishfleet), Nareas = nareas)
 
   year.seq <- as.numeric(dat.list$year_seq)
   yr <- floor(year.seq[year])
