@@ -13,8 +13,9 @@ zatage <- function(dat.list,year,f.by.fleet){
   M <- dat.list$M
   asel <- dat.list$age_selectivity
   Nages <- dat.list$Nages
-  f <- matrix(NA, nrow = length(f.by.fleet), ncol = Nages)
-  for(fleet in 1:4){
+  Nfishfleet <- dat.list$N_fishfleet
+  f <- matrix(NA, nrow = length(Nfishfleet), ncol = Nages)
+  for(fleet in 1:Nfishfleet){
 
     f[fleet,] <- as.numeric(asel[fleet,])*as.numeric(f.by.fleet[fleet])
   }
