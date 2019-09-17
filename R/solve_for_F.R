@@ -20,7 +20,7 @@ solve_for_f <- function(proj_catch, fleet, dat.list, year, N){
   ii <- 1
 
   estz <- M[year,] + S[fleet,] * test_f
-  est_catch <- sum(wt_a * S[fleet,] * test_f * N[year,] * (1-exp(-estz))/estz)
+  est_catch <- sum(wt_a * S[fleet,] * test_f * N[year,-1] * (1-exp(-estz))/estz)
   catch_diff <- est_catch - proj_catch
 
   while(abs(catch_diff) > 1e-6  & ii < 200){

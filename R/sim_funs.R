@@ -66,16 +66,19 @@ catch.in.biomass <- function(dat.list,N,year,z,f.by.fleet){
 catch.in.number <- function(dat.list,N,year,z,f.by.fleet){
 
   sel <- dat.list$age_selectivity
+  bycatch.sel <- sel[4,]
+  bycatch.sel[,2] <- .75
   se <- dat.list$catch_se
   catch <- matrix(data = NA, nrow = 4, ncol = 15)
-  for(fleet in 1:4){
+  for(fleet in 1:3){
     for(age in 1:15){
 
       catch[fleet, age] <- ((f.by.fleet[fleet]) / z[age]) * (1 - exp(- z[age])) * sel[fleet, age] * N[year-1, age+1] *exp(rnorm(1,0,se[fleet]))
 
-
     }
   }
+
+  catch[4, age] <- unlist(f.by.fleet[4] * bycatch.sel)
   catch
 }
 
