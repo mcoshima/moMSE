@@ -7,7 +7,7 @@
 solve_for_f(proj_catch, fleet, dat.list, year, N)
 }
 \arguments{
-\item{proj_catch}{the expected catch from fleet for the year}
+\item{proj_catch}{the expected catch from fleet for the year (in numbers)}
 
 \item{fleet}{fleet you are calculating F for}
 
