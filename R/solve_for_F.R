@@ -16,10 +16,15 @@ solve_for_f <- function(proj_catch, fleet, dat.list, year, N){
   Nages <- dat.list$Nages
   M <- dat.list$M
   S <- dat.list$age_selectivity
+  wt <- dat.list$wtatage
   ii <- 1
 
   estz <- M[year,] + S[fleet,] * test_f
-  est_catch <- sum(S[fleet,] * test_f * N[year,-1] * (1-exp(-estz))/estz)
+  if(fleet == 1 | fleet == 2){
+    est_catch <- sum(wt[1,] *S[fleet,] * test_f * N[year,-1] * (1-exp(-estz))/estz)
+  }else{
+    est_catch <- sum(S[fleet,] * test_f * N[year,-1] * (1-exp(-estz))/estz)
+    }
   catch_diff <- est_catch - proj_catch
 
   while(abs(catch_diff) > 1e-6  & ii < 200){
@@ -32,7 +37,11 @@ solve_for_f <- function(proj_catch, fleet, dat.list, year, N){
     test_f <- (F_upper + F_lower)/2
     est_catch <- 0
     estz <- M[year,] + S[fleet,] * test_f
-    est_catch <- sum(S[fleet,] * test_f * N[year,-1] * (1-exp(-estz))/estz)
+    if(fleet == 1 | fleet == 2){
+      est_catch <- sum(wt[1,] *S[fleet,] * test_f * N[year,-1] * (1-exp(-estz))/estz)
+    }else{
+      est_catch <- sum(S[fleet,] * test_f * N[year,-1] * (1-exp(-estz))/estz)
+    }
     catch_diff <- est_catch - proj_catch
     ii <- ii + 1
 
