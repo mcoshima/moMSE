@@ -13,9 +13,9 @@ zatage <- function(dat.list,year,f.by.fleet){
   M <- dat.list$M
   asel <- dat.list$age_selectivity
   Nages <- dat.list$Nages
-  Nfishfleet <- dat.list$N_fishfleet
-  f <- matrix(NA, nrow = Nfishfleet, ncol = Nages)
-  for(fleet in 1:Nfishfleet){
+  Nfleet <- dat.list$N_totalfleet
+  f <- matrix(NA, nrow = Nfleet, ncol = Nages)
+  for(fleet in 1:Nfleet){
 
     f[fleet,] <- as.numeric(asel[fleet,])*as.numeric(f.by.fleet[fleet])
   }
@@ -38,7 +38,7 @@ catch.in.biomass <- function(dat.list,N,year,z,f.by.fleet){
 
   sel <- dat.list$age_selectivity
   wtatage <- dat.list$wtatage
-  catch <- matrix(data = NA, nrow = 4, ncol = 15)
+  catch <- matrix(data = NA, nrow = 2, ncol = 15)
   for(fleet in 1:2){
     for(age in 1:15){
 
@@ -69,8 +69,9 @@ catch.in.number <- function(dat.list,N,year,z,f.by.fleet){
   bycatch.sel <- sel[4,]
   bycatch.sel[,2] <- .75
   se <- dat.list$catch_se
-  catch <- matrix(data = NA, nrow = 4, ncol = 15)
-  for(fleet in 1:3){
+  Nfleet <- dat.list$N_totalfleet
+  catch <- matrix(data = NA, nrow = Nfleet, ncol = 15)
+  for(fleet in 1:Nfleet){
     for(age in 1:15){
 
       catch[fleet, age] <- ((f.by.fleet[fleet]) / z[age]) * (1 - exp(- z[age])) * sel[fleet, age] * N[year-1, age+1] *exp(rnorm(1,0,se[fleet]))
@@ -78,7 +79,6 @@ catch.in.number <- function(dat.list,N,year,z,f.by.fleet){
     }
   }
 
-  catch[4, age] <- unlist(f.by.fleet[4] * bycatch.sel)
   catch
 }
 
