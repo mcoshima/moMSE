@@ -13,15 +13,17 @@
 
 splt.recombine <- function(df1, df2, ind, N){
 
-  names <- df2 %>% select_(ind) %>% unique() %>% pull() %>% as.character()
+  names <- df1 %>% select_(ind) %>% unique() %>% pull() %>% sort()
 
   split.dat <- df1 %>% group_by_(ind) %>% group_split() %>% setNames(names)
+
+  names.2 <- df2 %>% select_(ind) %>% unique() %>% pull() %>% sort()
 
   split.new <- df2 %>% group_by_(ind) %>% group_split() %>% setNames(names)
 
   for(i in 1:N){
 
-    x <- which(names(split.dat) == names(split.dat)[i])
+    x <- which(names(split.dat) == names(split.new)[i])
 
     split.dat[[x]] <- rbind(as.data.frame(split.dat[x]),as.data.frame(split.new[i]))
     colnames(split.dat[[x]]) <- colnames(df1)
