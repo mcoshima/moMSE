@@ -90,8 +90,8 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     slice(rows)  %>%
     na.omit() %>%
     bind_cols(comp.index) %>%
-    rename("7" = V1,
-           "8" = V2,
+    rename("8" = V1,
+           "9" = V2,
            "3" = V3,
            "4" = V4,
            "11" = V5,
@@ -113,7 +113,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
            obs = value)
 
 
-  new.cpue <- splt.recombine(dat.$CPUE, new.index, 'index', N = 7)
+  new.cpue <- splt.recombine(dat.$CPUE, new.index, 'index', N = length(unique(new.index$index)))
 
   dat.$CPUE <- new.cpue[which(new.cpue$obs > 0),]
 
