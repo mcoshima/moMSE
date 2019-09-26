@@ -19,7 +19,7 @@ splt.recombine <- function(df1, df2, ind, N){
 
   names.2 <- df2 %>% select_(ind) %>% unique() %>% pull() %>% sort()
 
-  split.new <- df2 %>% group_by_(ind) %>% group_split() %>% setNames(names)
+  split.new <- df2 %>% group_by_(ind) %>% group_split() %>% setNames(names.2)
 
   for(i in 1:N){
 
