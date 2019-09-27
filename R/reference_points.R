@@ -15,7 +15,7 @@ find_spr <- function(dir.) {
     pull()
 
   SSB_equ <- rep.file$derived_quants %>%
-    filter(str_detect(LABEL, "SSB")) %>%
+    filter(str_detect(LABEL, "SPB")) %>%
     slice(tail(row_number(), 10)) %>%
     summarise(mean(Value)) %>%
     pull()
