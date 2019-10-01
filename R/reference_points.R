@@ -45,7 +45,7 @@ find_spr <- function(dir.) {
     writeLines(fcast., paste0(dir., "/Forecast.ss"))
 
     shell(paste("cd/d", dir., "&& ss3", sep = " "))
-    rep.file <- SS_output(dir.)
+    rep.file <- MO_SSoutput(dir.)
     pbPost("note",
            title = "SS run",
            body = msg1)
