@@ -5,7 +5,7 @@
 #' @export
 #'
 find_spr <- function(dir.) {
-  rep.file <- SS_output(dir., forecast = FALSE, verbose = F, printstats = F, forefile = "Forecast-report.sso", covar = F)
+  rep.file <- MO_SSoutput(dir., forecast = FALSE, verbose = F, printstats = F, forefile = "Forecast-report.sso", covar = F)
 
   print("Rep file read in")
 
@@ -15,7 +15,7 @@ find_spr <- function(dir.) {
     pull()
 
   SSB_equ <- rep.file$derived_quants %>%
-    filter(str_detect(Label, "SPB")) %>%
+    filter(str_detect(Label, "SSB_20")) %>%
     slice(tail(row_number(), 10)) %>%
     summarise(mean(Value)) %>%
     pull()
