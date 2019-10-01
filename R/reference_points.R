@@ -15,7 +15,7 @@ find_spr <- function(dir.) {
     pull()
 
   SSB_equ <- rep.file$derived_quants %>%
-    filter(str_detect(LABEL, "SPB")) %>%
+    filter(str_detect(Label, "SPB")) %>%
     slice(tail(row_number(), 10)) %>%
     summarise(mean(Value)) %>%
     pull()
@@ -56,7 +56,7 @@ find_spr <- function(dir.) {
       pull()
 
     SSB_equ <- rep.file$derived_quants %>%
-      filter(str_detect(LABEL, "SSB")) %>%
+      filter(str_detect(Label, "SSB")) %>%
       slice(tail(row_number(), 10)) %>%
       summarise(mean(Value)) %>%
       pull()
@@ -115,33 +115,33 @@ getRP <- function(rep., dat.list, year){
 
   #End year F
   rp.df$F_cur <- rep.$derived_quants %>%
-    filter(str_detect(LABEL, "F_")) %>%
-    filter(str_detect(LABEL, paste(floor(year.seq[year])))) %>%
+    filter(str_detect(Label, "F_")) %>%
+    filter(str_detect(Label, paste(floor(year.seq[year])))) %>%
     select(Value) %>%
     pull()
 
   #average of F from terminal 10 years of forecast
   rp.df$equ_SPR <- rep.$derived_quants %>%
-    filter(str_detect(LABEL, "Bratio")) %>%
+    filter(str_detect(Label, "Bratio")) %>%
     slice(tail(row_number(), 10)) %>%
     summarise(mean(Value)) %>%
     pull()
 
   #F at SPR 30%
   rp.df$Fspr30 <- rep.$derived_quants %>%
-    filter(str_detect(LABEL, "Fstd_MSY")) %>%
+    filter(str_detect(Label, "Fstd_MSY")) %>%
     select(Value) %>%
     pull()
 
   rp.df$F_ratio <- rp.df$F_cur/rp.df$Fspr30
 
   rp.df$SSB_equ <- rep.$derived_quants %>%
-    filter(str_detect(LABEL, "SSB_Btgt")) %>%
+    filter(str_detect(Label, "SSB_Btgt")) %>%
     select(Value) %>%
     pull()
 
   rp.df$SSB_cur <-  rep.$derived_quants %>%
-    filter(str_detect(LABEL, paste0("SSB_", floor(year.seq[year])))) %>%
+    filter(str_detect(Label, paste0("SSB_", floor(year.seq[year])))) %>%
     pull(Value)
 
   MSST <- (1-.25)*rp.df$SSB_equ
