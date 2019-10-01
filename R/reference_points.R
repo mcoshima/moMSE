@@ -136,7 +136,7 @@ getRP <- function(rep., dat.list, year){
   rp.df$F_ratio <- rp.df$F_cur/rp.df$Fspr30
 
   rp.df$SSB_equ <- rep.$derived_quants %>%
-    filter(str_detect(Label, "SSB_Btgt")) %>%
+    filter(str_detect(Label, "SSB_SPRtgt")) %>%
     select(Value) %>%
     pull()
 
