@@ -19,8 +19,6 @@ rebuild_ttarg <- function(forefile, dir., dat.list){
 
   fcast. <- SS_readforecast(forefile, Nfleets = nfishfleet, Nareas = nareas)
 
-  year.seq <- as.numeric(dat.list$year_seq)
-  yr <- floor(year.seq[year])
   years <-  rep(seq(yr+1, 2064, by =1),each = 4)
   zero_catches <- data.frame("Year" = years,
                              "Seas" = rep(1, length(years)),
