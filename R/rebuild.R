@@ -4,8 +4,11 @@
 #' @param dir. directory to send new forecast file
 #' @param dat.list list with the sequence of years
 #' @keywords rebuild, t_target
+#' @import r4ss dplyr
+#' @importFrom magrittr %>%
 #' @export
 #'
+
 rebuild_ttarg <- function(forefile, dir., dat.list){
 
   gen <- 7
@@ -34,21 +37,21 @@ rebuild_ttarg <- function(forefile, dir., dat.list){
   SS_writeforecast(fcast., dir = dir., overwrite = T)
   shell(paste("cd/d", dir., "&& ss3", sep = " "))
 
-  rep.file <- SS_output(dir = dir., verbose = F, printstats = F)
+  rep.file <- MO_SSoutput(dir = dir., verbose = F, printstats = F)
 
   recovered <- rep.file$derived_quants %>%
-    filter(str_detect(Label,"Bratio_")) %>%
+    dplyr::filter(str_detect(Label,"Bratio_")) %>%
     select(Label, Value) %>%
-    filter(Value >= 0.299 & Value <= 0.31) %>%
+    dplyr::filter(Value >= 0.299 & Value <= 0.31) %>%
     separate(Label, into = c("Label", "Year"), sep = "_") %>%
     mutate(Year = as.numeric(Year)) %>%
-    filter(Year >= yr)
+    dplyr::filter(Year >= yr)
 
   if(nrow(recovered) == 1){
     t_min <- recovered$Year - yr
 
   }else{
-    temp.year <- recovered %>% filter(Year > yr) %>% slice(1)
+    temp.year <- recovered %>% dplyr::filter(Year > yr) %>% slice(1)
     t_min <- temp.year$Year - yr
   }
 
@@ -68,6 +71,8 @@ rebuild_ttarg <- function(forefile, dir., dat.list){
 #' @param dat.list list with the sequence of years
 #' @param t_targ calculated by rebuild_ttarg, the number of years it will take to rebuild stock
 #' @keywords rebuild, t_target, catch, F
+#' @import r4ss dplyr
+#' @importFrom magrittr %>%
 #' @export
 #'
 
@@ -86,15 +91,15 @@ rebuild_f <- function(forefile, dir., dat.list, t_targ){
 
   shell(paste("cd/d", dir., "&& ss3", sep = " "))
 
-  temp.rep <- SS_output(dir = dir., verbose = F, printstats = F)
+  temp.rep <- MO_SSoutput(dir = dir., verbose = F, printstats = F)
 
   recovered <- rep.file$derived_quants %>%
-    filter(str_detect(Label,"Bratio_")) %>%
+    dplyr::filter(str_detect(Label,"Bratio_")) %>%
     select(Label, Value) %>%
-    filter(Value >= 0.299 & Value <= 0.31) %>%
+    dplyr::filter(Value >= 0.299 & Value <= 0.31) %>%
     separate(Label, into = c("Label", "Year"), sep = "_") %>%
     mutate(Year = as.numeric(Year)) %>%
-    filter(Year >= yr & Year <= yr+t_targ)
+    dplyr::filter(Year >= yr & Year <= yr+t_targ)
 
   recov <- ifelse(nrow(recovered) > 0, TRUE, FALSE)
 
@@ -108,15 +113,15 @@ rebuild_f <- function(forefile, dir., dat.list, t_targ){
       fcast.$SPRtarget <- paste(i, "# SPR target (e.g. 0.40)", sep = " ")
       SS_writeforecast(fcast., dir = dir., overwrite = T)
       shell(paste("cd/d", dir., "&& ss3", sep = " "))
-      temp.rep <- SS_output(dir = dir., verbose = F, printstats = F)
+      temp.rep <- MO_SSoutput(dir = dir., verbose = F, printstats = F)
 
       recovered <- rep.file$derived_quants %>%
-        filter(str_detect(Label,"Bratio_")) %>%
+        dplyr::filter(str_detect(Label,"Bratio_")) %>%
         select(Label, Value) %>%
-        filter(Value >= 0.299 & Value <= 0.31) %>%
+        dplyr::filter(Value >= 0.299 & Value <= 0.31) %>%
         separate(Label, into = c("Label", "Year"), sep = "_") %>%
         mutate(Year = as.numeric(Year)) %>%
-        filter(Year >= yr & Year <= yr+t_targ)
+        dplyr::filter(Year >= yr & Year <= yr+t_targ)
 
       if(nrow(recovered) >= 1){
         break
@@ -124,20 +129,20 @@ rebuild_f <- function(forefile, dir., dat.list, t_targ){
     }
   }
 
-  temp.rep <- SS_output(dir = dir., verbose = F, printstats = F)
+  temp.rep <- MO_SSoutput(dir = dir., verbose = F, printstats = F)
   nw_catch <- temp.rep$derived_quants %>%
-    filter(str_detect(Label, "ForeCatch_")) %>%
+    dplyr::filter(str_detect(Label, "ForeCatch_")) %>%
     separate(Label, into = c("Label", "Year"), sep = "_") %>%
     mutate(Year = as.numeric(Year)) %>%
-    filter(Year > yr & Year <= yr+t_targ) %>%
+    dplyr::filter(Year > yr & Year <= yr+t_targ) %>%
     select(Value) %>%
     pull()
 
   nw_f <- temp.rep$derived_quants %>%
-    filter(str_detect(Label, "F_")) %>%
+    dplyr::filter(str_detect(Label, "F_")) %>%
     separate(Label, into = c("Label", "Year"), sep = "_") %>%
     mutate(Year = as.numeric(Year)) %>%
-    filter(Year > yr & Year <= yr+t_targ) %>%
+    dplyr::filter(Year > yr & Year <= yr+t_targ) %>%
     select(Value) %>%
     pull()
 

@@ -6,8 +6,7 @@
 #' @param f.by.fleet Fishing mortality by fleet for year y
 #' @keywords mortality
 #' @export
-#'
-#'
+
 zatage <- function(dat.list,year,f.by.fleet){
 
   M <- dat.list$M
@@ -32,8 +31,7 @@ zatage <- function(dat.list,year,f.by.fleet){
 #' @param f.by.fleet Fishing mortality by fleet for year y
 #' @keywords catch
 #' @export
-#'
-#'
+
 catch.in.biomass <- function(dat.list,N,year,z,f.by.fleet){
 
   sel <- dat.list$age_selectivity
@@ -60,8 +58,6 @@ catch.in.biomass <- function(dat.list,N,year,z,f.by.fleet){
 #' @param f.by.fleet Fishing mortality by fleet for year y
 #' @keywords catch
 #' @export
-#'
-#'
 
 catch.in.number <- function(dat.list,N,year,z,f.by.fleet){
 
@@ -207,6 +203,7 @@ simBatlen <- function(Nlen, dat.list, year){
 #' @param year current year in simulation
 #' @param dat.list list with vector of error for each age and vector of the years in simulation
 #' @keywords age composition
+#' @importFrom stats rmultinom
 #' @export
 #'
 #'
@@ -244,6 +241,7 @@ simAgecomp <-  function(catch.by.fleet, year, dat.list){
 #'
 #' @param dat.list list with catchability and CPUE SE values
 #' @param b vector of vulnerable biomass for each fleet
+#' @importFrom stats rlnorm
 #' @keywords index of abundance
 #' @export
 #'

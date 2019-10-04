@@ -1,9 +1,12 @@
 #' Find the SPR input value for forecast.ss file to achieve SPR 30\%
 #'
 #' @param dir. directory of where the original and new forecast file are. Also sends notifications to phone (pbpost) after each run and when 30\% is reached.
+#' @import dplyr r4ss RPushbullet stringr
+#' @importFrom magrittr %>%
 #' @keywords SPR
 #' @export
 #'
+
 find_spr <- function(dir.) {
   rep.file <- MO_SSoutput(dir., forecast = FALSE, verbose = F, printstats = F, forefile = "Forecast-report.sso", covar = F)
 
@@ -15,7 +18,7 @@ find_spr <- function(dir.) {
     pull()
 
   SSB_equ <- rep.file$derived_quants %>%
-    filter(str_detect(Label, "SSB_20")) %>%
+    dplyr::filter(str_detect(Label, "SSB_20")) %>%
     slice(tail(row_number(), 10)) %>%
     summarise(mean(Value)) %>%
     pull()
@@ -56,7 +59,7 @@ find_spr <- function(dir.) {
       pull()
 
     SSB_equ <- rep.file$derived_quants %>%
-      filter(str_detect(Label, "SSB")) %>%
+      dplyr::filter(str_detect(Label, "SSB")) %>%
       slice(tail(row_number(), 10)) %>%
       summarise(mean(Value)) %>%
       pull()
@@ -91,8 +94,11 @@ find_spr <- function(dir.) {
 #' @param rep. report file from SS assessment
 #' @param dat.list contains sequence of years in simulation
 #' @param year current year in simulation
+#' @import dplyr stringr
+#' @importFrom magrittr %>%
 #' @export
 #'
+
 getRP <- function(rep., dat.list, year){
 
   year.seq <- dat.list$year_seq
@@ -115,33 +121,33 @@ getRP <- function(rep., dat.list, year){
 
   #End year F
   rp.df$F_cur <- rep.$derived_quants %>%
-    filter(str_detect(Label, "F_")) %>%
-    filter(str_detect(Label, paste(floor(year.seq[year])))) %>%
+    dplyr::filter(str_detect(Label, "F_")) %>%
+    dplyr::filter(str_detect(Label, paste(floor(year.seq[year])))) %>%
     select(Value) %>%
     pull()
 
   #average of F from terminal 10 years of forecast
   rp.df$equ_SPR <- rep.$derived_quants %>%
-    filter(str_detect(Label, "Bratio")) %>%
+    dplyr::filter(str_detect(Label, "Bratio")) %>%
     slice(tail(row_number(), 10)) %>%
     summarise(mean(Value)) %>%
     pull()
 
   #F at SPR 30%
   rp.df$Fspr30 <- rep.$derived_quants %>%
-    filter(str_detect(Label, "Fstd_MSY")) %>%
+    dplyr::filter(str_detect(Label, "Fstd_MSY")) %>%
     select(Value) %>%
     pull()
 
   rp.df$F_ratio <- rp.df$F_cur/rp.df$Fspr30
 
   rp.df$SSB_equ <- rep.$derived_quants %>%
-    filter(str_detect(Label, "SSB_SPRtgt")) %>%
+    dplyr::filter(str_detect(Label, "SSB_SPRtgt")) %>%
     select(Value) %>%
     pull()
 
   rp.df$SSB_cur <-  rep.$derived_quants %>%
-    filter(str_detect(Label, paste0("SSB_", floor(year.seq[year])))) %>%
+    dplyr::filter(str_detect(Label, paste0("SSB_", floor(year.seq[year])))) %>%
     pull(Value)
 
   MSST <- (1-.25)*rp.df$SSB_equ

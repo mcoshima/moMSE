@@ -9,6 +9,11 @@
 #' @param comp.I index of red snapper abundance, a measure of competition
 #' @param dir. directory of where to read and write new files from/to
 #' @param write default set to TRUE, if FALSE, new .dat file will not be saved (won't overwrite the old file)
+#' @import dplyr purrr tidyr
+#' @importFrom reshape2 melt
+#' @importFrom r4ss SS_writedat
+#' @importFrom magrittr %>%
+#' @importFrom stats na.omit
 #' @keywords SS data, update
 #' @export
 #'
@@ -80,7 +85,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
   #Add CPUE
 
   comp.index <- comp.I %>%
-    filter(Year > yr - 5 & Year <= yr) %>%
+    dplyr::filter(Year > yr - 5 & Year <= yr) %>%
     select(-Year) %>%
     rename("obs" = RS_relative) %>%
     as.data.frame()

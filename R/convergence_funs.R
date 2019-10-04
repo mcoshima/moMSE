@@ -1,6 +1,7 @@
 #' Check for SS convergence
 #'
 #' @param dir. file path for assessment files
+#' @import dplyr r4ss
 #' @keywords convergence
 #' @return a vector of values: the number of parameters, the objective function value, and the max gradient component
 #' @export
@@ -29,6 +30,7 @@ check_convergence <- function(dir.){
 #'
 #' @param convCheck vector of convergence values (from check_convergence)
 #' @param dir. file path for assessment files
+#' @import r4ss
 #' @keywords convergence, jitter
 #' @return a logical term (T or F), T if the model converged from the jitter, F if the model didn't converge within 3 tries
 #' @export

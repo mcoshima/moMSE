@@ -7,6 +7,9 @@
 #' @param df2 second dataframe you want to split
 #' @param ind column name of index attribute you want to group and split dataframes by
 #' @param N number of individual indices
+#' @import dplyr
+#' @importFrom magrittr %>%
+#' @importFrom stats setNames
 #' @keywords split, recombine
 #' @export
 #'
@@ -40,6 +43,7 @@ splt.recombine <- function(df1, df2, ind, N){
 #' @param M total values should add up to
 #' @param sd sd of values, default is 1
 #' @param pos.only should the vector contain only positive values, default is TRUE
+#' @importFrom stats rnorm
 #' @keywords random, discrete
 #' @export
 #'
@@ -66,9 +70,10 @@ rand_intvect <- function(N, M, sd = 1, pos.only = TRUE) {
 #' @param N number of values in vector
 #' @param M total values should add up to
 #' @param sd sd of values, default is 1
+#' @importFrom stats rlnorm
 #' @keywords random, continuous
 #' @export
-#'
+
 
 rand_vect_cont <- function(N, M, sd = 1) {
   vec <- rlnorm(N, M/N, sd)
@@ -80,7 +85,7 @@ rand_vect_cont <- function(N, M, sd = 1) {
 #' @param string the character string containing numbers to extract
 #' @keywords numbers, character string
 #' @export
-#'
+
 Numextract <- function(string){
   unlist(regmatches(string,gregexpr("\\-*[[:digit:]]+\\.*[[:digit:]]*",string)))
 }
@@ -92,7 +97,7 @@ Numextract <- function(string){
 #' @param dir. current directory for scenario
 #' @keywords assessment files
 #' @export
-#'
+
 
 copy_files <- function(year, dat.list, dir.){
   assess.yr <- dat.list$year_seq[year]

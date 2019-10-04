@@ -52,7 +52,8 @@
 #' should probably be created at some point in the future.
 #' @author Ian Stewart, Ian Taylor
 #' @importFrom stats pnorm qnorm sd
-#' @importFrom utils flush.console head read.table
+#' @importFrom utils flush.console head read.table tail
+#' @import r4ss
 #' @export
 #' @seealso \code{\link{SS_plots}}
 #' @examples

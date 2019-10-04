@@ -2,6 +2,7 @@
 #'
 #' @param base_size size font of text
 #' @param base_family font family (serif, sans)
+#' @import ggplot2
 #' @export
 #' @examples
 #' theme_pub()
