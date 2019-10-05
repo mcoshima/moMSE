@@ -18,6 +18,7 @@ solve_for_f <- function(proj_catch, fleet, dat.list, year, N){
   S <- dat.list$age_selectivity
   wt <- dat.list$wtatage
   ii <- 1
+  prop_catch <- proj_catch * dat.list$catch_proportions
 
   estz <- M[year,] + S[fleet,] * test_f
   if(fleet == 1 | fleet == 2){
@@ -25,7 +26,7 @@ solve_for_f <- function(proj_catch, fleet, dat.list, year, N){
   }else{
     est_catch <- sum(S[fleet,] * test_f * N[year,-1] * (1-exp(-estz))/estz)
     }
-  catch_diff <- est_catch - proj_catch
+  catch_diff <- est_catch - prop_catch
 
   while(abs(catch_diff) > 1e-6  & ii < 200){
 
@@ -42,7 +43,7 @@ solve_for_f <- function(proj_catch, fleet, dat.list, year, N){
     }else{
       est_catch <- sum(S[fleet,] * test_f * N[year,-1] * (1-exp(-estz))/estz)
     }
-    catch_diff <- est_catch - proj_catch
+    catch_diff <- est_catch - prop_catch
     ii <- ii + 1
 
   }
