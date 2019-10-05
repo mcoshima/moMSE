@@ -43,9 +43,9 @@ find_spr <- function(dir.) {
   }else{
   for (i in spr.seq) {
     print(i)
-    fcast. <- readLines(paste0(dir., "/Forecast.ss"), -1)
-    fcast.[7] <- paste(i, "# SPR target (e.g. 0.40)", sep = " ")
-    writeLines(fcast., paste0(dir., "/Forecast.ss"))
+    fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1)
+    fcast.$SPRtarget <- i
+    SS_writeforecast(fcast., dir = dir., overwrite = T)
 
     shell(paste("cd/d", dir., "&& ss3", sep = " "))
     rep.file <- MO_SSoutput(dir.)
