@@ -152,6 +152,9 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     ct. <- readLines(paste0(dir.,"/VS.ctl"),-1)
     ct.[83] <- paste(yr, "# last year of main recr_devs; forecast devs start in following year", sep = " ")
     writeLines(ct., paste0(dir., "/VS.ctl"))
+    fore <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1)
+    fore$Nforecastyrs <- 60
+    SS_writeforecast(fore, dir = dir., overwrite = T)
   }
 
 }
