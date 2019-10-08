@@ -55,7 +55,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
 
   #Add Shrimp bycatch as discard
   new.discard <-
-    catch.fleet.year %>%
+    .datcatch %>%
     as.data.frame() %>%
     slice(rows) %>%
     select(4) %>%

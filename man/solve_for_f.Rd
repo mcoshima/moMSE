@@ -4,7 +4,7 @@
 \alias{solve_for_f}
 \title{Function to solve for F by fleet based on catch for that year}
 \usage{
-solve_for_f(proj_catch, fleet, dat.list, year, N)
+solve_for_f(proj_catch, fleet, dat.list, year, N, total_catch = T)
 }
 \arguments{
 \item{proj_catch}{the expected catch from fleet for the year (in numbers)}
@@ -16,6 +16,8 @@ solve_for_f(proj_catch, fleet, dat.list, year, N)
 \item{year}{year index}
 
 \item{N}{matrix of numbers-at-age, first column is year}
+
+\item{total_catch}{is the projected catch a combined catch (T) or only for that fleet (F)}
 }
 \value{
 The F value that achieves the projected catch level

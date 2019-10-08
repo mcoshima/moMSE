@@ -1,30 +1,25 @@
 #' Find the SPR input value for forecast.ss file to achieve SPR 30\%
 #'
 #' @param dir. directory of where the original and new forecast file are. Also sends notifications to phone (pbpost) after each run and when 30\% is reached.
+#' @param notifications True or False, whether to send push notifications to phone or not. Set to F if you don't have internet connection.
 #' @import dplyr r4ss RPushbullet stringr
 #' @importFrom magrittr %>%
 #' @keywords SPR
 #' @export
 #'
 
-find_spr <- function(dir.) {
+find_spr <- function(dir., notifications = T) {
   rep.file <- MO_SSoutput(dir., forecast = FALSE, verbose = F, printstats = F, forefile = "Forecast-report.sso", covar = F)
 
   print("Rep file read in")
 
-  SSB0 <- rep.file$timeseries %>%
-    slice(1) %>%
-    select(SpawnBio) %>%
-    pull()
-
-  SSB_equ <- rep.file$derived_quants %>%
-    dplyr::filter(str_detect(Label, "SSB_20")) %>%
+  SPR <- rep.file$derived_quants %>%
+    dplyr::filter(str_detect(Label, "Bratio")) %>%
     slice(tail(row_number(), 10)) %>%
     summarise(mean(Value)) %>%
     pull()
 
-  delta <-
-    as.character(sign(SSB_equ / SSB0 - 0.3))                 #-1 if it ratio is smaller than .3, 0 if ratio is bigger
+  delta <- as.character(sign(SPR - 0.3))    #-1 if it ratio is smaller than .3, 0 if ratio is bigger
   fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1)
   fcast_spr <- fcast.$SPRtarget
   spr.seq <- switch(
@@ -47,42 +42,41 @@ find_spr <- function(dir.) {
     fcast.$SPRtarget <- i
     SS_writeforecast(fcast., dir = dir., overwrite = T)
 
-    shell(paste("cd/d", dir., "&& ss3", sep = " "))
+    shell(paste("cd/d", dir., "&& ss3 -nohess", sep = " "))
     rep.file <- MO_SSoutput(dir.)
-    pbPost("note",
-           title = "SS run",
-           body = msg1)
+    # pbPost("note",
+    #        title = "SS run",
+    #        body = msg1)
 
-    SSB0 <- rep.file$timeseries %>%
-      slice(1) %>%
-      select(SpawnBio) %>%
-      pull()
-
-    SSB_equ <- rep.file$derived_quants %>%
-      dplyr::filter(str_detect(Label, "SSB_20")) %>%
+    SPR <- rep.file$derived_quants %>%
+      dplyr::filter(str_detect(Label, "Bratio")) %>%
       slice(tail(row_number(), 10)) %>%
       summarise(mean(Value)) %>%
       pull()
 
-    pbPost(
-      "note",
-      title = "SS run",
-      body = paste(
-        "The SPR value is",
-        round(SSB_equ / SSB0, 3),
-        "when the forecast SPR value was set to",
-        i
+    if(notifications == T){
+      pbPost(
+        "note",
+        title = "SS run",
+        body = paste(
+          "The SPR value is",
+          round(SPR, 3),
+          "when the forecast SPR value was set to",
+          i
+        )
       )
-    )
-
-    if (SSB_equ / SSB0 > 0.299 & SSB_equ / SSB0 < 0.31) {
-      pbPost("note",
-             title = "SS run",
-             body = paste("The new SPR value is", i, "."))
-      break
-
-
     }
+
+    if(notifications == T){
+      if (SPR > 0.299 & SPR < 0.31) {
+        pbPost("note",
+               title = "SS run",
+               body = paste("The new SPR value is", i, "."))
+        break
+
+      }
+    }
+
 
   } }
 
@@ -102,16 +96,15 @@ find_spr <- function(dir.) {
 getRP <- function(rep., dat.list, year){
 
   year.seq <- dat.list$year_seq
-  rp.df <- as.data.frame(matrix(data = NA, nrow = 1, ncol = 10))
+  rp.df <- as.data.frame(matrix(data = NA, nrow = 1, ncol = 9))
   colnames(rp.df) <- c("SSB0",
                        "F_cur",
-                       "equ_SPR",
                        "Fspr30",
                        "F_ratio",
                        "SSB_equ",
                        "SSB_cur",
                        "spr30",
-                       "bratio",
+                       "bratio_cur",
                        'status_cur')
 
   rp.df$SSB0 <- rep.$timeseries %>%
@@ -127,7 +120,7 @@ getRP <- function(rep., dat.list, year){
     pull()
 
   #average of F from terminal 10 years of forecast
-  rp.df$equ_SPR <- rep.$derived_quants %>%
+  equ_SPR <- rep.$derived_quants %>%
     dplyr::filter(str_detect(Label, "Bratio")) %>%
     slice(tail(row_number(), 10)) %>%
     summarise(mean(Value)) %>%
@@ -153,9 +146,9 @@ getRP <- function(rep., dat.list, year){
   MSST <- (1-.25)*rp.df$SSB_equ
 
   #if achieved spr 30%
-  rp.df$spr30 <- rp.df$SSB_equ/rp.df$SSB0
+  rp.df$spr30 <- equ_SPR
   #current bratio
-  rp.df$bratio <- rp.df$SSB_cur/rp.df$SSB_equ
+  rp.df$bratio_cur <- rp.df$SSB_cur/rp.df$SSB_equ
   #current stock status compared to MSST
   rp.df$status_cur <- rp.df$SSB_cur/MSST
 

@@ -4,10 +4,11 @@
 #' @param dat.list list including M, Nages, weight-at-age, and selectivity
 #' @param year year index
 #' @param N matrix of numbers-at-age, first column is year
+#' @param total_catch is the projected catch a combined catch (T) or only for that fleet (F)
 #' @return The F value that achieves the projected catch level
 #' @keywords F, projections
 #' @export
-solve_for_f <- function(proj_catch, fleet, dat.list, year, N){
+solve_for_f <- function(proj_catch, fleet, dat.list, year, N, total_catch = T){
 
   F_upper <- 2
   F_lower <- 0
@@ -18,7 +19,12 @@ solve_for_f <- function(proj_catch, fleet, dat.list, year, N){
   S <- dat.list$age_selectivity
   wt <- dat.list$wtatage
   ii <- 1
-  prop_catch <- proj_catch * dat.list$catch_proportions
+  if(total_catch == T){
+    prop_catch <- proj_catch * dat.list$catch_proportions[fleet]
+  }else{
+    prop_catch <- proj_catch
+  }
+
 
   estz <- M[year,] + S[fleet,] * test_f
   if(fleet == 1 | fleet == 2){

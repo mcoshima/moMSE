@@ -4,10 +4,12 @@
 \alias{find_spr}
 \title{Find the SPR input value for forecast.ss file to achieve SPR 30\%}
 \usage{
-find_spr(dir.)
+find_spr(dir., notifications = T)
 }
 \arguments{
 \item{dir.}{directory of where the original and new forecast file are. Also sends notifications to phone (pbpost) after each run and when 30\% is reached.}
+
+\item{notifications}{True or False, whether to send push notifications to phone or not. Set to F if you don't have internet connection.}
 }
 \description{
 Find the SPR input value for forecast.ss file to achieve SPR 30\%
