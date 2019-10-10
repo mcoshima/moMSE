@@ -110,7 +110,10 @@ copy_files <- function(year, dat.list, dir.){
                        "VS.ctl",
                        "Report.sso",
                        "Forecast-report.sso",
-                       "ss3.PAR")
+                       "ss3.PAR",
+                       "CompReport.sso",
+                       "covar.sso",
+                       "wtatage.ss_new")
   file.copy(file.path(current.dir, assess.files), new.path)
 
 }

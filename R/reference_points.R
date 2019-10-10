@@ -128,7 +128,7 @@ getRP <- function(rep., dat.list, year){
 
   #F at SPR 30%
   rp.df$Fspr30 <- rep.$derived_quants %>%
-    dplyr::filter(str_detect(Label, "Fstd_MSY")) %>%
+    dplyr::filter(str_detect(Label, "Fstd_SPR")) %>%
     select(Value) %>%
     pull()
 
