@@ -2,9 +2,11 @@
 
 export(MO_SSoutput)
 export(Numextract)
+export(age_to_len)
 export(catch.in.biomass)
 export(catch.in.number)
 export(check_convergence)
+export(competition_fun)
 export(copy_files)
 export(dat.update)
 export(find_spr)

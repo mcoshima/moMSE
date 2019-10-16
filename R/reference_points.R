@@ -67,16 +67,15 @@ find_spr <- function(dir., notifications = T) {
       )
     }
 
-    if(notifications == T){
-      if (SPR > 0.299 & SPR < 0.31) {
+    if (SPR > 0.299 & SPR < 0.31) {
+
+      break
+      if(notifications == T){
         pbPost("note",
                title = "SS run",
                body = paste("The new SPR value is", i, "."))
-        break
-
       }
     }
-
 
   } }
 
