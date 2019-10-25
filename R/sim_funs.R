@@ -22,6 +22,41 @@ zatage <- function(dat.list,year,f.by.fleet){
 
   Z
 }
+
+#' Calculates catch-at-age by fleet based on exploitation rates
+#' @param F_exploit a vector of exploitation rates for each fishery
+#' @param N matrix with numbers at age
+#' @param year current year in simulation
+#' @param dat.list Contains selectivity-at-age matrix and weight-at-age matrix
+#' @keywords catch exploitation
+#' @export
+
+
+exploit_catch <- function(F_exploit, N, year, dat.list){
+
+  S <- dat.list$age_selectivity
+  wt <- dat.list$wtatage
+  Nfleet <- dat.list$N_totalfleet
+  Nages <- dat.list$Nages
+  cage <- matrix(NA, nrow = Nfleet, ncol = Nages)
+
+  for(fleet in 1:Nfleet){
+    if(is.na(F_exploit[fleet])){
+      next()
+    }
+    if(fleet == 1 | fleet == 2){
+      cage[fleet,] <- unlist(F_exploit[fleet]*(N[year-1,-1]*wt[1,]*S[fleet,]))
+    }else{
+      cage[fleet,] <- unlist(F_exploit[fleet]*(N[year-1,-1]*S[fleet,]))
+
+    }
+  }
+
+  return(cage)
+
+}
+
+
 #' Converts catch in numbers to catch in biomass
 #'
 #' @param dat.list Contains selectivity-at-age matrix and weight-at-age matrix
@@ -41,7 +76,7 @@ catch.in.biomass <- function(dat.list,N,year,z,f.by.fleet){
     for(age in 1:15){
 
       catch[fleet, age] <-
-        ((f.by.fleet[fleet]) / z[age]) * (1 - exp(- z[age])) * sel[fleet, age] * N[year-1, age+1] * wtatage[1  ,age]
+        ((sel[fleet,age] * f.by.fleet[fleet]) / z[age]) * (1 - exp(- z[age])) * N[year-1, age+1] * wtatage[1  ,age]
 
     }}
   catch
@@ -62,15 +97,13 @@ catch.in.biomass <- function(dat.list,N,year,z,f.by.fleet){
 catch.in.number <- function(dat.list,N,year,z,f.by.fleet){
 
   sel <- dat.list$age_selectivity
-  bycatch.sel <- sel[4,]
-  bycatch.sel[,2] <- .75
   se <- dat.list$catch_se
   Nfleet <- dat.list$N_totalfleet
   catch <- matrix(data = NA, nrow = Nfleet, ncol = 15)
   for(fleet in 1:Nfleet){
     for(age in 1:15){
 
-      catch[fleet, age] <- ((f.by.fleet[fleet]) / z[age]) * (1 - exp(- z[age])) * sel[fleet, age] * N[year-1, age+1] *exp(rnorm(1,0,se[fleet]))
+      catch[fleet, age] <- ((sel[fleet,age] * f.by.fleet[fleet]) / z[age]) * (1 - exp(- z[age])) * N[year-1, age+1]
 
     }
   }

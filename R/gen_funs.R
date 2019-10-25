@@ -114,6 +114,6 @@ copy_files <- function(year, dat.list, dir.){
                        "CompReport.sso",
                        "covar.sso",
                        "wtatage.ss_new")
-  file.copy(file.path(current.dir, assess.files), new.path)
+  file.copy(file.path(current.dir, assess.files), new.path, overwrite = T)
 
 }

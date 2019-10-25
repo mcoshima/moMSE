@@ -127,15 +127,17 @@ getRP <- function(rep., dat.list, year){
 
   #F at SPR 30%
   rp.df$Fspr30 <- rep.$derived_quants %>%
-    dplyr::filter(str_detect(Label, "Fstd_SPR")) %>%
-    select(Value) %>%
+    dplyr::filter(str_detect(Label, "F_")) %>%
+    slice(tail(row_number(), 10)) %>%
+    summarise(mean(Value)) %>%
     pull()
 
   rp.df$F_ratio <- rp.df$F_cur/rp.df$Fspr30
 
   rp.df$SSB_equ <- rep.$derived_quants %>%
-    dplyr::filter(str_detect(Label, "SSB_SPRtgt")) %>%
-    select(Value) %>%
+    dplyr::filter(str_detect(Label, "SSB_20")) %>%
+    slice(tail(row_number(), 10)) %>%
+    summarise(mean(Value)) %>%
     pull()
 
   rp.df$SSB_cur <-  rep.$derived_quants %>%

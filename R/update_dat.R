@@ -154,6 +154,9 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     writeLines(ct., paste0(dir., "/VS.ctl"))
     fore <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1)
     fore$Nforecastyrs <- 60
+    fcast.$ForeCatch <- NULL
+    fcast.$Ncatch <- 0
+    fcast.$InputBasis <- -1
     SS_writeforecast(fore, dir = dir., overwrite = T)
   }
 

@@ -30,6 +30,7 @@ rebuild_ttarg <- function(forefile, dir., dat.list){
                           " # Number of forecast catch levels to input (else calc catch from forecast F)")
   fcast.$InputBasis <- paste0(99, " # basis for input Fcast catch: 2=dead catch; 3=retained catch; 99=input Hrate(F) (units are from fleetunits; note new codes in SSV3.20)")
   if(nrow(zero_catches) > 0){
+    fcast.$ForeCatch <- NULL
     fcast.$ForeCatch <- print(zero_catches, row.names = F)
   }
   SS_writeforecast(fcast., dir = dir., overwrite = T)
@@ -40,7 +41,7 @@ rebuild_ttarg <- function(forefile, dir., dat.list){
   recovered <- rep.file$derived_quants %>%
     dplyr::filter(str_detect(Label,"Bratio_")) %>%
     select(Label, Value) %>%
-    dplyr::filter(Value >= 0.299 & Value <= 0.31) %>%
+    dplyr::filter(Value >= 0.299) %>%
     separate(Label, into = c("Label", "Year"), sep = "_") %>%
     mutate(Year = as.numeric(Year)) %>%
     dplyr::filter(Year >= yr)
@@ -76,7 +77,7 @@ rebuild_ttarg <- function(forefile, dir., dat.list){
 
 rebuild_f <- function(forefile, dir., dat.list, t_targ){
 
-  nfishfleet <- dat.list$N_fishfleet + 1
+  nfishfleet <- dat.list$N_totalfleet + 1
   nareas <- dat.list$N_areas
   fcast. <- SS_readforecast(forefile, Nfleets = nfishfleet, Nareas = nareas)
 
@@ -87,14 +88,14 @@ rebuild_f <- function(forefile, dir., dat.list, t_targ){
 
   SS_writeforecast(fcast., dir = dir., overwrite = T)
 
-  shell(paste("cd/d", dir., "&& ss3", sep = " "))
+  shell(paste("cd/d", dir., "&& ss3 -nohess", sep = " "))
 
   temp.rep <- MO_SSoutput(dir = dir., verbose = F, printstats = F)
 
-  recovered <- rep.file$derived_quants %>%
+  recovered <- temp.rep$derived_quants %>%
     dplyr::filter(str_detect(Label,"Bratio_")) %>%
     select(Label, Value) %>%
-    dplyr::filter(Value >= 0.299 & Value <= 0.31) %>%
+    dplyr::filter(Value >= 0.299) %>%
     separate(Label, into = c("Label", "Year"), sep = "_") %>%
     mutate(Year = as.numeric(Year)) %>%
     dplyr::filter(Year >= yr & Year <= yr+t_targ)
@@ -110,13 +111,13 @@ rebuild_f <- function(forefile, dir., dat.list, t_targ){
       fcast. <- SS_readforecast(forefile, Nfleets = nfishfleet, Nareas = nareas)
       fcast.$SPRtarget <- paste(i, "# SPR target (e.g. 0.40)", sep = " ")
       SS_writeforecast(fcast., dir = dir., overwrite = T)
-      shell(paste("cd/d", dir., "&& ss3", sep = " "))
+      shell(paste("cd/d", dir., "&& ss3 -nohess", sep = " "))
       temp.rep <- MO_SSoutput(dir = dir., verbose = F, printstats = F)
 
-      recovered <- rep.file$derived_quants %>%
+      recovered <- temp.rep$derived_quants %>%
         dplyr::filter(str_detect(Label,"Bratio_")) %>%
         select(Label, Value) %>%
-        dplyr::filter(Value >= 0.299 & Value <= 0.31) %>%
+        dplyr::filter(Value >= 0.299) %>%
         separate(Label, into = c("Label", "Year"), sep = "_") %>%
         mutate(Year = as.numeric(Year)) %>%
         dplyr::filter(Year >= yr & Year <= yr+t_targ)
