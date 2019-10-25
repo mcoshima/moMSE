@@ -26,7 +26,7 @@ solve_for_f <- function(proj_catch, fleet, dat.list, year, N, total_catch = T){
     prop_catch <- proj_catch
   }
 
-  MN <- sum(N[year,-1] - N[year,-1]*exp(-M[1,])) - pc
+  MN <- sum(N[year,-1] - N[year,-1]*exp(-M[1,])) - prop_catch
   Z <- log(sum(N[year,-1])/MN)
 
   if (fleet == 1 | fleet == 2) {
@@ -47,7 +47,7 @@ solve_for_f <- function(proj_catch, fleet, dat.list, year, N, total_catch = T){
     test_f <- (F_upper + F_lower)/2
     est_catch <- 0
 
-    MN <- sum(N[year,-1] - N[year,-1]*exp(-M[1,])) - pc
+    MN <- sum(N[year,-1] - N[year,-1]*exp(-M[1,])) - prop_catch
     Z <- log(sum(N[year,-1])/MN)
 
     if (fleet == 1 | fleet == 2) {
