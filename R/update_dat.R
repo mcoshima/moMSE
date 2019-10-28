@@ -69,6 +69,20 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     ) %>%
     select(-1)
 
+  comp.discard <-
+    .datcatch %>%
+    as.data.frame() %>%
+    slice(rows) %>%
+    select(5) %>%
+    na.omit() %>%
+    mutate (
+      Yr = yrs.,
+      Seas = rep(1,5),
+      Flt = rep(5,5),
+      Discard = V5,
+      Std_in = rep(0,5)
+   ) %>% select(-1)
+
   dat.$discard_data <- rbind(dat.$discard_data, new.discard)
 
   dat.$discard_data <- dat.$discard_data %>% distinct(Yr, .keep_all = T)
