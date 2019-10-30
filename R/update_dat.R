@@ -35,14 +35,15 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     slice(rows)  %>%
     na.omit() %>%
     mutate(
-      COMP = rep(0.001,1),
       year = yrs.,
       seas = rep(1,5)) %>%
     rename(CM_E = V1,
            CM_W = V2,
            REC = V3,
-           SMP_BYC = V4) %>%
+           SMP_BYC = V4,
+           COMP = V5) %>%
     mutate(SMP_BYC = rep(0.001,5),
+           COMP = rep(0.001,5),
            CM_E = ifelse(CM_E > 0, CM_E, 0.001),
            CM_W = ifelse(CM_W > 0, CM_W, 0.001),
            REC = ifelse(REC > 0, REC, 0.001))
@@ -81,7 +82,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
       Flt = rep(5,5),
       Discard = V5,
       Std_in = rep(0,5)
-   ) %>% select(-1)
+    ) %>% select(-1)
 
   dat.$discard_data <- rbind(dat.$discard_data, new.discard)
 
@@ -175,3 +176,4 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
   }
 
 }
+
