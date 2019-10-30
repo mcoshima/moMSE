@@ -20,7 +20,7 @@ find_spr <- function(dir., notifications = T) {
     pull()
 
   delta <- as.character(sign(SPR - 0.3))    #-1 if it ratio is smaller than .3, 0 if ratio is bigger
-  fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1)
+  fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
   fcast_spr <- fcast.$SPRtarget
   spr.seq <- switch(
     delta,
@@ -38,7 +38,7 @@ find_spr <- function(dir., notifications = T) {
   }else{
   for (i in spr.seq) {
     print(i)
-    fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1)
+    fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
     fcast.$SPRtarget <- i
     SS_writeforecast(fcast., dir = dir., overwrite = T)
 

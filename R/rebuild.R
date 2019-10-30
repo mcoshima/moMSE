@@ -17,7 +17,7 @@ rebuild_ttarg <- function(forefile, dir., dat.list){
   year.seq <- as.numeric(dat.list$year_seq)
   yr <- floor(year.seq[year])
 
-  fcast. <- SS_readforecast(forefile, Nfleets = nfishfleet, Nareas = nareas)
+  fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
 
   years <-  rep(seq(yr+1, 2064, by =1),each = 4)
   zero_catches <- data.frame("Year" = years,
@@ -79,7 +79,7 @@ rebuild_f <- function(forefile, dir., dat.list, t_targ){
 
   nfishfleet <- dat.list$N_totalfleet + 1
   nareas <- dat.list$N_areas
-  fcast. <- SS_readforecast(forefile, Nfleets = nfishfleet, Nareas = nareas)
+  fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
 
   fcast.$ForeCatch <- NULL
   fcast.$Ncatch <- 0
@@ -108,7 +108,7 @@ rebuild_f <- function(forefile, dir., dat.list, t_targ){
 
     for(i in SPRtarget){
 
-      fcast. <- SS_readforecast(forefile, Nfleets = nfishfleet, Nareas = nareas)
+      fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
       fcast.$SPRtarget <- paste(i, "# SPR target (e.g. 0.40)", sep = " ")
       SS_writeforecast(fcast., dir = dir., overwrite = T)
       shell(paste("cd/d", dir., "&& ss3 -nohess", sep = " "))
