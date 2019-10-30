@@ -84,17 +84,22 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
       Std_in = rep(0,5)
     ) %>% select(-1)
 
-  dat.$discard_data <- rbind(dat.$discard_data, new.discard)
+  dat.$discard_data$Flt[1] <- -4
+  dat.$discard_data <- rbind(dat.$discard_data, new.discard, comp.discard)
 
-  dat.$discard_data <- dat.$discard_data %>% distinct(Yr, .keep_all = T)
+  dat.$discard_data <- dplyr::arrange(dat.$discard_data, Flt, Yr)
 
-  old.tail <-which(dat.$discard_data$Seas < 1)[2]
+  dat.$discard_data <- dat.$discard_data %>% distinct(Yr, Flt, .keep_all = T)
+
+  old.tail <- which(dat.$discard_data$Seas < 1)[2]
 
   dat.$discard_data$Seas[old.tail] <- 1
 
+  new.tail <- tail(which(dat.$discard_data$Flt == -4),n=1)
+
   dat.$N_discard <- nrow(dat.$discard_data)
 
-  dat.$discard_data$Seas[dat.$N_discard] <- -1
+  dat.$discard_data$Seas[new.tail] <- -1
 
 
   #Add CPUE
@@ -162,7 +167,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
   dat.$endyr <- yr
 
   if(write == T){
-    SS_writedat(dat., outfile = paste0(dir.,"/VS.dat"),  overwrite = T)
+    SS_writedat_3.24(dat., outfile = paste0(dir.,"/VS.dat"), overwrite = T)
 
     ct. <- readLines(paste0(dir.,"/VS.ctl"),-1)
     ct.[83] <- paste(yr, "# last year of main recr_devs; forecast devs start in following year", sep = " ")
