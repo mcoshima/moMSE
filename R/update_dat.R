@@ -100,6 +100,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
   dat.$N_discard <- nrow(dat.$discard_data)
 
   dat.$discard_data$Seas[new.tail] <- -1
+  dat.$discard_data$Flt[1] <- 4
 
 
   #Add CPUE
