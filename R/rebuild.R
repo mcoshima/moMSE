@@ -16,14 +16,30 @@ rebuild_ttarg <- function(forefile, dir., dat.list){
   nareas <- dat.list$N_areas
   year.seq <- as.numeric(dat.list$year_seq)
   yr <- floor(year.seq[year])
+  shrimp.forecast.h <- 0.07356127
 
   fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
 
-  years <-  rep(seq(yr+1, 2064, by =1),each = 4)
-  zero_catches <- data.frame("Year" = years,
-                             "Seas" = rep(1, length(years)),
-                             "Fleet" = rep(c(1,2,3,4), length(years)/4),
-                             "Catch" = rep(0, length(years)))
+  years <-  rep(seq(yr+1, yr+60, by =1),each = 3)
+
+  no_catches <- data.frame("Year" = years,
+                           "Seas" = rep(1, length(years)),
+                           "Fleet" = rep(c(1,2,3), length(years)/3),
+                           "Catch" = rep(0, length(years)))
+
+  f1 <- dat.list$RS_projections %>%
+    filter(Year > yr & Year <= yr+60) %>%
+    mutate(Seas = rep(1, nrow(.)),
+           Fleet = rep(5, nrow(.)),
+           Catch = RS_relative) %>%
+    select(Year, Seas, Fleet, Catch)
+
+  f2 <- data.frame("Year" = unique(years),
+                   "Seas" = rep(1, length(years)/4),
+                   "Fleet" = rep(4, length(years)/4),
+                   "Catch" = rep(shrimp.forecast.h, length(years)/4))
+
+  zero_catches <- bind_rows(f1,f2, no_catches) %>% arrange(Year, Fleet)
   row.names(zero_catches) <- NULL
 
   fcast.$Ncatch <- paste0(nrow(zero_catches),
@@ -79,11 +95,26 @@ rebuild_f <- function(forefile, dir., dat.list, t_targ){
 
   nfishfleet <- dat.list$N_totalfleet + 1
   nareas <- dat.list$N_areas
+  shrimp.forecast.h <- 0.07356127
   fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
 
-  fcast.$ForeCatch <- NULL
-  fcast.$Ncatch <- 0
-  fcast.$InputBasis <- -1
+  f1 <- dat.list$RS_projections %>%
+    filter(Year > yr & Year <= yr+60) %>%
+    mutate(Seas = rep(1, nrow(.)),
+           Fleet = rep(5, nrow(.)),
+           Catch = RS_relative) %>%
+    select(Year, Seas, Fleet, Catch)
+
+  f2 <- data.frame("Year" = unique(years),
+                   "Seas" = rep(1, length(years)/4),
+                   "Fleet" = rep(4, length(years)/4),
+                   "Catch" = rep(shrimp.forecast.h, length(years)/4))
+
+  Fore_h <- bind_rows(f1,f2) %>% arrange(Year, Fleet)
+
+  fcast.$ForeCatch <- Fore_h
+  fcast.$Ncatch <- nrow(Fore_h)
+  fcast.$InputBasis <- 99
   fcast.$SPRtarget <- fcast.$SPRtarget
 
   SS_writeforecast(fcast., dir = dir., overwrite = T)
