@@ -104,9 +104,9 @@ rebuild_f <- function(dir., dat.list, t_targ){
     select(Year, Seas, Fleet, Catch)
 
   f2 <- data.frame("Year" = unique(years),
-                   "Seas" = rep(1, length(years)/4),
-                   "Fleet" = rep(4, length(years)/4),
-                   "Catch" = rep(shrimp.forecast.h, length(years)/4))
+                   "Seas" = rep(1, length(unique(years))),
+                   "Fleet" = rep(4, length(unique(years))),
+                   "Catch" = rep(shrimp.forecast.h, length(unique(years))))
 
   Fore_h <- bind_rows(f1,f2) %>% arrange(Year, Fleet)
 
