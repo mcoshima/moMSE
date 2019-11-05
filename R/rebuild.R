@@ -42,12 +42,11 @@ rebuild_ttarg <- function(dir., dat.list){
   zero_catches <- bind_rows(f1,f2, no_catches) %>% arrange(Year, Fleet)
   row.names(zero_catches) <- NULL
 
-  fcast.$Ncatch <- paste0(nrow(zero_catches),
-                          " # Number of forecast catch levels to input (else calc catch from forecast F)")
-  fcast.$InputBasis <- paste0(99, " # basis for input Fcast catch: 2=dead catch; 3=retained catch; 99=input Hrate(F) (units are from fleetunits; note new codes in SSV3.20)")
+  fcast.$Ncatch <- nrow(zero_catches)
+  fcast.$InputBasis <- 99
   if(nrow(zero_catches) > 0){
     fcast.$ForeCatch <- NULL
-    fcast.$ForeCatch <- print(zero_catches, row.names = F)
+    fcast.$ForeCatch <- zero_catches
   }
   MO_writeforecast(fcast., dir = dir., overwrite = T)
   shell(paste("cd/d", dir., "&& ss3", sep = " "))
