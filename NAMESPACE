@@ -2,6 +2,7 @@
 
 export(H_rate)
 export(MO_SSoutput)
+export(MO_writeforecast)
 export(Numextract)
 export(age_to_len)
 export(catch.in.biomass)

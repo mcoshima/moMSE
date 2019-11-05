@@ -178,7 +178,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     fore$ForeCatch <- fore$ForeCatch %>% filter(Year > yr)
     fore$Ncatch <- nrow(fore$ForeCatch)
     fore$InputBasis <- 99
-    SS_writeforecast(fore, dir = dir., overwrite = T)
+    MO_writeforecast(fore, dir = dir., overwrite = T)
   }
 
 }

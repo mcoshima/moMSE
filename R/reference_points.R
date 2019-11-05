@@ -40,7 +40,7 @@ find_spr <- function(dir., notifications = T) {
     print(i)
     fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
     fcast.$SPRtarget <- i
-    SS_writeforecast(fcast., dir = dir., overwrite = T)
+    MO_writeforecast(fcast., dir = dir., overwrite = T)
 
     shell(paste("cd/d", dir., "&& ss3 -nohess", sep = " "))
     rep.file <- MO_SSoutput(dir.)

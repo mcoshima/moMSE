@@ -49,7 +49,7 @@ rebuild_ttarg <- function(dir., dat.list){
     fcast.$ForeCatch <- NULL
     fcast.$ForeCatch <- print(zero_catches, row.names = F)
   }
-  SS_writeforecast(fcast., dir = dir., overwrite = T)
+  MO_writeforecast(fcast., dir = dir., overwrite = T)
   shell(paste("cd/d", dir., "&& ss3", sep = " "))
 
   rep.file <- MO_SSoutput(dir = dir., verbose = F, printstats = F)
@@ -116,7 +116,7 @@ rebuild_f <- function(dir., dat.list, t_targ){
   fcast.$InputBasis <- 99
   fcast.$SPRtarget <- fcast.$SPRtarget
 
-  SS_writeforecast(fcast., dir = dir., overwrite = T)
+  MO_writeforecast(fcast., dir = dir., overwrite = T)
 
   shell(paste("cd/d", dir., "&& ss3 -nohess", sep = " "))
 
@@ -140,7 +140,7 @@ rebuild_f <- function(dir., dat.list, t_targ){
 
       fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
       fcast.$SPRtarget <- paste(i, "# SPR target (e.g. 0.40)", sep = " ")
-      SS_writeforecast(fcast., dir = dir., overwrite = T)
+      MO_writeforecast(fcast., dir = dir., overwrite = T)
       shell(paste("cd/d", dir., "&& ss3 -nohess", sep = " "))
       temp.rep <- MO_SSoutput(dir = dir., verbose = F, printstats = F)
 
