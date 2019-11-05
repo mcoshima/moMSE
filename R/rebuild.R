@@ -27,7 +27,7 @@ rebuild_ttarg <- function(dir., dat.list){
                            "Catch" = rep(0, length(years)))
 
   f1 <- dat.list$RS_projections %>%
-    filter(Year > yr & Year <= yr+60) %>%
+    dplyr::filter(Year > yr & Year <= yr+60) %>%
     mutate(Seas = rep(1, nrow(.)),
            Fleet = rep(5, nrow(.)),
            Catch = RS_relative) %>%
