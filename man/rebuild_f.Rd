@@ -4,11 +4,9 @@
 \alias{rebuild_f}
 \title{Find the catch and f for time t_target required to rebuild stock}
 \usage{
-rebuild_f(forefile, dir., dat.list, t_targ)
+rebuild_f(dir., dat.list, t_targ)
 }
 \arguments{
-\item{forefile}{full or relative path to forecast file}
-
 \item{dir.}{directory to send new forecast file}
 
 \item{dat.list}{list with the sequence of years}

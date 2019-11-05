@@ -1,6 +1,5 @@
 #' Find the time it takes to rebuild the stock once SSB is below 30\%
 #'
-#' @param forefile full or relative path to forecast file
 #' @param dir. directory to send new forecast file
 #' @param dat.list list with the sequence of years
 #' @keywords rebuild, t_target
@@ -9,7 +8,7 @@
 #' @export
 #'
 
-rebuild_ttarg <- function(forefile, dir., dat.list){
+rebuild_ttarg <- function(dir., dat.list){
 
   gen <- 7
   nfishfleet <- as.numeric(dat.list$N_fishfleet) + 2
@@ -35,9 +34,10 @@ rebuild_ttarg <- function(forefile, dir., dat.list){
     select(Year, Seas, Fleet, Catch)
 
   f2 <- data.frame("Year" = unique(years),
-                   "Seas" = rep(1, length(years)/4),
-                   "Fleet" = rep(4, length(years)/4),
-                   "Catch" = rep(shrimp.forecast.h, length(years)/4))
+                   "Seas" = rep(1, length(unique(years))),
+                   "Fleet" = rep(4, length(unique(years))),
+                   "Catch" = rep(shrimp.forecast.h, length(unique(years))))
+
 
   zero_catches <- bind_rows(f1,f2, no_catches) %>% arrange(Year, Fleet)
   row.names(zero_catches) <- NULL
@@ -81,7 +81,6 @@ rebuild_ttarg <- function(forefile, dir., dat.list){
 
 #' Find the catch and f for time t_target required to rebuild stock
 #'
-#' @param forefile full or relative path to forecast file
 #' @param dir. directory to send new forecast file
 #' @param dat.list list with the sequence of years
 #' @param t_targ calculated by rebuild_ttarg, the number of years it will take to rebuild stock
@@ -91,7 +90,7 @@ rebuild_ttarg <- function(forefile, dir., dat.list){
 #' @export
 #'
 
-rebuild_f <- function(forefile, dir., dat.list, t_targ){
+rebuild_f <- function(dir., dat.list, t_targ){
 
   nfishfleet <- dat.list$N_totalfleet + 1
   nareas <- dat.list$N_areas
