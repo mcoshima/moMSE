@@ -24,8 +24,8 @@ find_spr <- function(dir., notifications = T) {
   fcast_spr <- fcast.$SPRtarget
   spr.seq <- switch(
     delta,
-    "1" = seq(fcast_spr, fcast_spr - .15, by = -.01),
-    "-1" = seq(fcast_spr, fcast_spr + .15, by = .01),
+    "1" = seq(fcast_spr, fcast_spr - .25, by = -.01),
+    "-1" = seq(fcast_spr, fcast_spr + .25, by = .01),
     "0" = NA
   )
 
