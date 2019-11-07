@@ -79,7 +79,7 @@ rebuild_ttarg <- function(dir., dat.list){
 
 
 #' Find the catch and f for time t_target required to rebuild stock
-#'
+#' @param year year
 #' @param dir. directory to send new forecast file
 #' @param dat.list list with the sequence of years
 #' @param t_targ calculated by rebuild_ttarg, the number of years it will take to rebuild stock
@@ -89,13 +89,16 @@ rebuild_ttarg <- function(dir., dat.list){
 #' @export
 #'
 
-rebuild_f <- function(dir., dat.list, t_targ){
+rebuild_f <- function(year, dir., dat.list, t_targ){
 
   nfishfleet <- dat.list$N_totalfleet + 1
   nareas <- dat.list$N_areas
   shrimp.forecast.h <- 0.07356127
   fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
+  year.seq <- as.numeric(dat.list$year_seq)
+  yr <- floor(year.seq[year])
   years <- seq(yr, yr + 60)
+
   f1 <- dat.list$RS_projections %>%
     filter(Year > yr & Year <= yr+60) %>%
     mutate(Seas = rep(1, nrow(.)),
