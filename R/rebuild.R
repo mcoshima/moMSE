@@ -95,7 +95,7 @@ rebuild_f <- function(dir., dat.list, t_targ){
   nareas <- dat.list$N_areas
   shrimp.forecast.h <- 0.07356127
   fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
-
+  years <- seq(yr, yr + 60)
   f1 <- dat.list$RS_projections %>%
     filter(Year > yr & Year <= yr+60) %>%
     mutate(Seas = rep(1, nrow(.)),
@@ -113,7 +113,7 @@ rebuild_f <- function(dir., dat.list, t_targ){
   fcast.$ForeCatch <- Fore_h
   fcast.$Ncatch <- nrow(Fore_h)
   fcast.$InputBasis <- 99
-  fcast.$SPRtarget <- fcast.$SPRtarget
+  #fcast.$SPRtarget <- fcast.$SPRtarget
 
   MO_writeforecast(fcast., dir = dir., overwrite = T)
 
