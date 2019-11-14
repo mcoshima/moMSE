@@ -103,7 +103,7 @@ Numextract <- function(string){
 copy_files <- function(year, dat.list, dir., iteration){
   assess.yr <- dat.list$year_seq[year]
   current.dir <- dir.
-  new.path <- paste0(dir., "/assessments", "/Year_", assess.yr, iteration)
+  new.path <- paste0(dir., "/assessments", "/Year_", assess.yr, "/", iteration)
   dir.create(new.path)
   assess.files <- list("forecast.ss",
                        "starter.ss",
