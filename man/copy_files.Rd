@@ -4,16 +4,14 @@
 \alias{copy_files}
 \title{Copy assessment files to a new folder}
 \usage{
-copy_files(year, dat.list, dir., iteration)
+copy_files(dat.list, dir., new.dir)
 }
 \arguments{
-\item{year}{year}
-
 \item{dat.list}{a list object containing the sequence of years}
 
 \item{dir.}{current directory for scenario}
 
-\item{iteration}{the iteration number you are on}
+\item{new.dir}{the new destitnation to send files to}
 }
 \description{
 Copy assessment files to a new folder

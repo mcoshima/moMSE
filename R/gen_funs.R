@@ -92,29 +92,17 @@ Numextract <- function(string){
 
 #' Copy assessment files to a new folder
 #'
-#' @param year year
 #' @param dat.list a list object containing the sequence of years
 #' @param dir. current directory for scenario
-#' @param iteration the iteration number you are on
+#' @param new.dir the new destitnation to send files to
 #' @keywords assessment files
 #' @export
 
 
-copy_files <- function(year, dat.list, dir., iteration){
-  assess.yr <- dat.list$year_seq[year]
+copy_files <- function(dat.list, dir., new.dir){
   current.dir <- dir.
-  new.path <- paste0(dir., "/assessments", "/Year_", assess.yr, "/", iteration)
-  dir.create(new.path)
-  assess.files <- list("forecast.ss",
-                       "starter.ss",
-                       "VS.dat",
-                       "VS.ctl",
-                       "Report.sso",
-                       "Forecast-report.sso",
-                       "ss3.PAR",
-                       "CompReport.sso",
-                       "covar.sso",
-                       "wtatage.ss_new")
-  file.copy(file.path(current.dir, assess.files), new.path, overwrite = T)
+  dir.create(new.dir)
+  assess.files <- dat.list$files.to.copy
+  file.copy(file.path(current.dir, assess.files), new.dir, overwrite = T)
 
 }
