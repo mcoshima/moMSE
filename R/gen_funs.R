@@ -95,14 +95,15 @@ Numextract <- function(string){
 #' @param year year
 #' @param dat.list a list object containing the sequence of years
 #' @param dir. current directory for scenario
+#' @param iteration the iteration number you are on
 #' @keywords assessment files
 #' @export
 
 
-copy_files <- function(year, dat.list, dir.){
+copy_files <- function(year, dat.list, dir., iteration){
   assess.yr <- dat.list$year_seq[year]
   current.dir <- dir.
-  new.path <- paste0(dir., "/assessments", "/Year_", assess.yr)
+  new.path <- paste0(dir., "/assessments", "/Year_", assess.yr, iteration)
   dir.create(new.path)
   assess.files <- list("forecast.ss",
                        "starter.ss",
