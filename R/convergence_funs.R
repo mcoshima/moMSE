@@ -10,13 +10,13 @@ check_convergence <- function(dir.){
 
   par.file <- paste0(dir., "/ss3.par")
   convCheck <- readLines(par.file,n=1)
-  convCheck <- Numextract(convCheck)
+  convCheck <- strsplit(convCheck, split = "Maximum gradient component = ")[[1]][2]
 
-  if(length(convCheck) > 3){
-    convCheck <- gsub("-", "e-", convCheck)
-    convCheck[3] <- paste0(convCheck[3], convCheck[4])
-    convCheck[4] <- NULL
-  }
+  # if(length(convCheck) > 3){
+  #   convCheck <- gsub("-", "e-", convCheck)
+  #   convCheck[3] <- paste0(convCheck[3], convCheck[4])
+  #   convCheck[4] <- NULL
+  # }
   # convCheck is now a vector of three values:
   # 1. Number of parameters
   # 2. Objective function value
@@ -44,7 +44,7 @@ jit_for_converg <- function(convCheck, dir.){
 
   iteration <- 1
   jit <- .JITTER
-  while(as.numeric(convCheck[3]) > .CONV_CRITERIA & iteration < .MAX_ITERATIONS){
+  while(as.numeric(convCheck) > .CONV_CRITERIA & iteration < .MAX_ITERATIONS){
     # Redo the assessment with jitter if gradient is less than the convergence criterion
     iteration <- iteration + 1
     print("Redoing assessment due to non-convergence")
