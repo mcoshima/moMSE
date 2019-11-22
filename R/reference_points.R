@@ -67,7 +67,7 @@ find_spr <- function(dir., notifications = T) {
       )
     }
 
-    if (SPR >= 0.299) {
+    if (SPR >= 0.299 & SPR <= 0.31) {
 
       break
       if(notifications == T){
