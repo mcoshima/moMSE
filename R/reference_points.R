@@ -42,7 +42,7 @@ find_spr <- function(dir., notifications = T) {
     fcast.$SPRtarget <- i
     MO_writeforecast(fcast., dir = dir., overwrite = T)
 
-    shell(paste("cd/d", dir., "&& ss3 -nohess", sep = " "))
+    shell(paste("cd/d", dir., "&& ss3", sep = " "))
     rep.file <- MO_SSoutput(dir.)
     # pbPost("note",
     #        title = "SS run",
