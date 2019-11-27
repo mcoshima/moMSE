@@ -175,7 +175,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     writeLines(ct., paste0(dir., "/VS.ctl"))
     fore <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
     fore$Nforecastyrs <- 60
-    fore$ForeCatch <- fore$ForeCatch %>% filter(Year > yr)
+    fore$ForeCatch <- dat.list$full_forecast %>% filter(Year > yr & Year < yr+60)
     fore$Ncatch <- nrow(fore$ForeCatch)
     fore$InputBasis <- 99
     MO_writeforecast(fore, dir = dir., overwrite = T)
