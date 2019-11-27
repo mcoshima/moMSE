@@ -50,6 +50,7 @@ jit_for_converg <- function(convCheck, dir.){
     print("Redoing assessment due to non-convergence")
     starter <- SS_readstarter(paste0(dir., "/starter.ss"))
     starter$jitter_fraction <- jit
+    start$init_values_src <- 1
     SS_writestarter(starter,dir=dir.,file="starter.ss",overwrite=T)
     shell(paste("cd/d", dir., "&& ss3", sep = " "))
 
