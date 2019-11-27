@@ -42,7 +42,18 @@ find_spr <- function(dir., notifications = T) {
     fcast.$SPRtarget <- i
     MO_writeforecast(fcast., dir = dir., overwrite = T)
 
-    shell(paste("cd/d", dir., "&& ss3", sep = " "))
+    tryCatch(shell(paste("cd/d", dir., "&& ss3", sep = " ")),
+             warning = function(c) {
+               starter <- SS_readstarter(paste0(dir., "/starter.ss"))
+               start$init_values_src <- 1
+               SS_writestarter(starter,dir=dir.,file="starter.ss",overwrite=T)
+               shell(paste("cd/d", dir., "&& ss3", sep = " "))
+               },
+             error = function(e) {
+               starter <- SS_readstarter(paste0(dir., "/starter.ss"))
+               start$init_values_src <- 1
+               SS_writestarter(starter,dir=dir.,file="starter.ss",overwrite=T)
+               shell(paste("cd/d", dir., "&& ss3", sep = " "))})
     rep.file <- MO_SSoutput(dir.)
     # pbPost("note",
     #        title = "SS run",
