@@ -84,7 +84,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
       Std_in = rep(0,5)
     ) %>% select(-1)
 
-  dat.$discard_data$Flt[1] <- -4
+  dat.$discard_data[which(dat.$discard_data$Flt == 4),3] <- -4
 
   flt.4 <- dat.$discard_data[which(dat.$discard_data$Flt == -4),]
 
