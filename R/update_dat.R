@@ -85,23 +85,24 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I,
     ) %>% select(-1)
 
   dat.$discard_data$Flt[1] <- -4
-  dat.$discard_data <- rbind(dat.$discard_data, new.discard, comp.discard)
 
-  dat.$discard_data <- dplyr::arrange(dat.$discard_data, Flt, Yr)
+  flt.4 <- dat.$discard_data[which(dat.$discard_data$Flt == -4),]
 
-  dat.$discard_data <- dat.$discard_data %>% distinct(Yr, Flt, .keep_all = T)
+  flt.5 <- dat.$discard_data[which(dat.$discard_data$Flt == 5),]
 
-  old.tail <- which(dat.$discard_data$Seas < 1)[2]
+  flt.4 <- rbind(flt.4, new.discard)
 
-  dat.$discard_data$Seas[old.tail] <- 1
+  flt.4 <- flt.4 %>% distinct(Yr, Flt, .keep_all = T)
 
-  new.tail <- tail(which(dat.$discard_data$Flt == -4),n=1)
+  flt.4 <- flt.4 %>%
+    mutate(Seas = ifelse(Yr == 1972 | Yr == 2013 | Yr == 2014 | Yr == yr, -1, 1),
+           Flt = ifelse(Yr == 1972 | Yr == 2014, 4, -4))
+
+  flt.5 <- rbind(flt.5, comp.discard)
+
+  dat.$discard_data <- rbind(flt.4, flt.5)
 
   dat.$N_discard <- nrow(dat.$discard_data)
-
-  dat.$discard_data$Seas[new.tail] <- -1
-  dat.$discard_data$Flt[1] <- 4
-
 
   #Add CPUE
 
