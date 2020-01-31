@@ -4,8 +4,8 @@
 \alias{dat.update}
 \title{This takes simulated data from the operating model pop dynamics and adds it in the correct format to the .dat file for SS.}
 \usage{
-dat.update(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I, dir.,
-  write = T)
+dat.update(year, dat.list, dat., agecomp.list, I, .datcatch,
+  comp.I = NULL, dir., write = T)
 }
 \arguments{
 \item{year}{last year in sequence of new data}
@@ -16,7 +16,7 @@ dat.update(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I, dir.,
 
 \item{agecomp.list}{simulated age comps from catch}
 
-\item{I}{simulated indices of abundance for each fleet}
+\item{I}{simulated indices of abundance for each fleet. Default is NULL and competition index will not be included in assessment.}
 
 \item{.datcatch}{A dataframe with the catch for each fishing fleet in the correct units (biomass and numbers)}
 
