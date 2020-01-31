@@ -257,7 +257,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I 
     ct. <- readLines(paste0(dir.,"/VS.ctl"),-1)
     ct.[83] <- paste(yr, "# last year of main recr_devs; forecast devs start in following year", sep = " ")
     writeLines(ct., paste0(dir., "/VS.ctl"))
-    fore <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
+    fore <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = dat.list$N_totalfleet, Nareas = 1, version = "3.24")
     fore$Nforecastyrs <- 60
     fore$ForeCatch <- dat.list$full_forecast %>% filter(Year > yr & Year < yr+60)
     fore$Ncatch <- nrow(fore$ForeCatch)
