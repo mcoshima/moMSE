@@ -209,7 +209,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I 
              "11" = V6) %>%
       melt() %>%
       mutate(
-        year = rep(yrs.,7),
+        year = rep(yrs.,6),
         seas = rep(1,30),
         variable = as.factor(variable),
         se_log = c(rep(CPUE.se$SE, each = 5))
