@@ -1,6 +1,7 @@
 #' Find the SPR input value for forecast.ss file to achieve SPR 30\%
 #'
 #' @param dir. directory of where the original and new forecast file are. Also sends notifications to phone (pbpost) after each run and when 30\% is reached.
+#' @param nfleet the number of non-survey fleets for reading in forecast file
 #' @param notifications True or False, whether to send push notifications to phone or not. Set to F if you don't have internet connection.
 #' @import dplyr r4ss RPushbullet stringr
 #' @importFrom magrittr %>%
@@ -8,7 +9,7 @@
 #' @export
 #'
 
-find_spr <- function(dir., notifications = T) {
+find_spr <- function(dir., nfleet, notifications = T) {
   rep.file <- MO_SSoutput(dir., forecast = FALSE, verbose = F, printstats = F, forefile = "Forecast-report.sso", covar = F)
 
   print("Rep file read in")
@@ -20,7 +21,7 @@ find_spr <- function(dir., notifications = T) {
     pull()
 
   delta <- as.character(sign(SPR - 0.3))    #-1 if it ratio is smaller than .3, 0 if ratio is bigger
-  fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
+  fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = nfleet, Nareas = 1, version = "3.24")
   fcast_spr <- fcast.$SPRtarget
   spr.seq <- switch(
     delta,
@@ -38,7 +39,7 @@ find_spr <- function(dir., notifications = T) {
   }else{
   for (i in spr.seq) {
     print(i)
-    fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
+    fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = nfleet, Nareas = 1, version = "3.24")
     fcast.$SPRtarget <- i
     MO_writeforecast(fcast., dir = dir., overwrite = T)
 
