@@ -4,12 +4,14 @@
 \alias{jit_for_converg}
 \title{Run jitter analysis if model didn't converge}
 \usage{
-jit_for_converg(convCheck, dir.)
+jit_for_converg(convCheck, dir., lin = FALSE)
 }
 \arguments{
 \item{convCheck}{vector of convergence values (from check_convergence)}
 
 \item{dir.}{file path for assessment files}
+
+\item{lin}{if TRUE running on a linux system, default is FALSE}
 }
 \value{
 a logical term (T or F), T if the model converged from the jitter, F if the model didn't converge within 3 tries

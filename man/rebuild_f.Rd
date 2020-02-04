@@ -4,7 +4,7 @@
 \alias{rebuild_f}
 \title{Find the catch and f for time t_target required to rebuild stock}
 \usage{
-rebuild_f(year, dir., dat.list, t_targ)
+rebuild_f(year, dir., dat.list, t_targ, lin = FALSE)
 }
 \arguments{
 \item{year}{year}
@@ -14,6 +14,8 @@ rebuild_f(year, dir., dat.list, t_targ)
 \item{dat.list}{list with the sequence of years}
 
 \item{t_targ}{calculated by rebuild_ttarg, the number of years it will take to rebuild stock}
+
+\item{lin}{if TRUE running on a linux system, default is FALSE}
 }
 \description{
 Find the catch and f for time t_target required to rebuild stock

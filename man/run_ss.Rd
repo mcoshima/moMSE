@@ -2,14 +2,16 @@
 % Please edit documentation in R/run_ss.R
 \name{run_ss}
 \alias{run_ss}
-\title{This runs SS and jitters if the model does not converge.}
+\title{This runs SS and returns TRUE if there was an error that prevented the model from converging.}
 \usage{
-run_ss(dir.)
+run_ss(dir., lin = FALSE)
 }
 \arguments{
 \item{dir.}{the directory of where to run ss from}
+
+\item{lin}{if TRUE, running on linux system, default is FALSE}
 }
 \description{
-This runs SS and jitters if the model does not converge.
+This runs SS and returns TRUE if there was an error that prevented the model from converging.
 }
 \keyword{SS}

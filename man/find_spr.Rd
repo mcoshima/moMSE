@@ -4,7 +4,7 @@
 \alias{find_spr}
 \title{Find the SPR input value for forecast.ss file to achieve SPR 30\%}
 \usage{
-find_spr(dir., nfleet, notifications = T)
+find_spr(dir., nfleet, notifications = T, lin = FALSE)
 }
 \arguments{
 \item{dir.}{directory of where the original and new forecast file are. Also sends notifications to phone (pbpost) after each run and when 30\% is reached.}
@@ -12,6 +12,8 @@ find_spr(dir., nfleet, notifications = T)
 \item{nfleet}{the number of non-survey fleets for reading in forecast file}
 
 \item{notifications}{True or False, whether to send push notifications to phone or not. Set to F if you don't have internet connection.}
+
+\item{lin}{if TRUE running on linux system, default if FALSE}
 }
 \description{
 Find the SPR input value for forecast.ss file to achieve SPR 30\%

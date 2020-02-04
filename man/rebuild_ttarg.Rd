@@ -4,12 +4,14 @@
 \alias{rebuild_ttarg}
 \title{Find the time it takes to rebuild the stock once SSB is below 30\%}
 \usage{
-rebuild_ttarg(dir., dat.list)
+rebuild_ttarg(dir., dat.list, lin = FALSE)
 }
 \arguments{
 \item{dir.}{directory to send new forecast file}
 
 \item{dat.list}{list with the sequence of years}
+
+\item{lin}{if TRUE running on a linux system, default is FALSE}
 }
 \description{
 Find the time it takes to rebuild the stock once SSB is below 30\%

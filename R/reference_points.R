@@ -3,13 +3,14 @@
 #' @param dir. directory of where the original and new forecast file are. Also sends notifications to phone (pbpost) after each run and when 30\% is reached.
 #' @param nfleet the number of non-survey fleets for reading in forecast file
 #' @param notifications True or False, whether to send push notifications to phone or not. Set to F if you don't have internet connection.
+#' @param lin if TRUE running on linux system, default if FALSE
 #' @import dplyr r4ss RPushbullet stringr
 #' @importFrom magrittr %>%
 #' @keywords SPR
 #' @export
 #'
 
-find_spr <- function(dir., nfleet, notifications = T) {
+find_spr <- function(dir., nfleet, notifications = T, lin = FALSE) {
   rep.file <- MO_SSoutput(dir., forecast = FALSE, verbose = F, printstats = F, forefile = "Forecast-report.sso", covar = F)
 
   print("Rep file read in")
@@ -43,22 +44,28 @@ find_spr <- function(dir., nfleet, notifications = T) {
     fcast.$SPRtarget <- i
     MO_writeforecast(fcast., dir = dir., overwrite = T)
 
-    tryCatch(shell(paste("cd/d", dir., "&& ss3", sep = " ")),
+    tryCatch(if(isTRUE(lin)){
+      system("cd ../one_plus ss3 > /dev/null 2>&1")
+      }else{
+        shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))},
              warning = function(c) {
                starter <- SS_readstarter(paste0(dir., "/starter.ss"))
                start$init_values_src <- 1
                SS_writestarter(starter,dir=dir.,file="starter.ss",overwrite=T)
-               shell(paste("cd/d", dir., "&& ss3", sep = " "))
+               if(isTRUE(lin)){
+                 system("cd ../one_plus ss3 > /dev/null 2>&1")
+               }else{
+                   shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))}
                },
              error = function(e) {
                starter <- SS_readstarter(paste0(dir., "/starter.ss"))
                start$init_values_src <- 1
                SS_writestarter(starter,dir=dir.,file="starter.ss",overwrite=T)
-               shell(paste("cd/d", dir., "&& ss3", sep = " "))})
+               if(isTRUE(lin)){
+                 system("cd ../one_plus ss3 > /dev/null 2>&1")
+                 }else{
+                   shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))}})
     rep.file <- MO_SSoutput(dir.)
-    # pbPost("note",
-    #        title = "SS run",
-    #        body = msg1)
 
     SPR <- rep.file$derived_quants %>%
       dplyr::filter(str_detect(Label, "Bratio")) %>%

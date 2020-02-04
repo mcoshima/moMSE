@@ -30,12 +30,13 @@ check_convergence <- function(dir.){
 #'
 #' @param convCheck vector of convergence values (from check_convergence)
 #' @param dir. file path for assessment files
+#' @param lin if TRUE running on a linux system, default is FALSE
 #' @import r4ss
 #' @keywords convergence, jitter
 #' @return a logical term (T or F), T if the model converged from the jitter, F if the model didn't converge within 3 tries
 #' @export
 #'
-jit_for_converg <- function(convCheck, dir.){
+jit_for_converg <- function(convCheck, dir., lin = FALSE){
 
   .CONV_CRITERIA         <- 0.1
   .MAX_ITERATIONS        <- 3
@@ -52,7 +53,10 @@ jit_for_converg <- function(convCheck, dir.){
     starter$jitter_fraction <- jit
     starter$init_values_src <- 1
     SS_writestarter(starter,dir=dir.,file="starter.ss",overwrite=T)
-    shell(paste("cd/d", dir., "&& ss3", sep = " "))
+    if(isTRUE(lin)){
+      system("cd ../one_plus ss3 > /dev/null 2>&1")
+    }else{
+        shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))}
 
     convCheck <- check_convergence(dir.)
 

@@ -2,13 +2,14 @@
 #'
 #' @param dir. directory to send new forecast file
 #' @param dat.list list with the sequence of years
+#' @param lin if TRUE running on a linux system, default is FALSE
 #' @keywords rebuild, t_target
 #' @import r4ss dplyr
 #' @importFrom magrittr %>%
 #' @export
 #'
 
-rebuild_ttarg <- function(dir., dat.list){
+rebuild_ttarg <- function(dir., dat.list, lin = FALSE){
 
   gen <- 7
   nfishfleet <- as.numeric(dat.list$N_fishfleet) + 2
@@ -49,7 +50,10 @@ rebuild_ttarg <- function(dir., dat.list){
     fcast.$ForeCatch <- zero_catches
   }
   MO_writeforecast(fcast., dir = dir., overwrite = T)
-  shell(paste("cd/d", dir., "&& ss3", sep = " "))
+  if(isTRUE(lin)){
+    system("cd ../one_plus ss3 > /dev/null 2>&1")
+  }else{
+      shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))}
 
   rep.file <- MO_SSoutput(dir = dir., verbose = F, printstats = F)
 
@@ -83,13 +87,14 @@ rebuild_ttarg <- function(dir., dat.list){
 #' @param dir. directory to send new forecast file
 #' @param dat.list list with the sequence of years
 #' @param t_targ calculated by rebuild_ttarg, the number of years it will take to rebuild stock
+#' @param lin if TRUE running on a linux system, default is FALSE
 #' @keywords rebuild, t_target, catch, F
 #' @import r4ss dplyr
 #' @importFrom magrittr %>%
 #' @export
 #'
 
-rebuild_f <- function(year, dir., dat.list, t_targ){
+rebuild_f <- function(year, dir., dat.list, t_targ, lin = FALSE){
 
   nfishfleet <- dat.list$N_totalfleet + 1
   nareas <- dat.list$N_areas
@@ -120,7 +125,10 @@ rebuild_f <- function(year, dir., dat.list, t_targ){
 
   MO_writeforecast(fcast., dir = dir., overwrite = T)
 
-  shell(paste("cd/d", dir., "&& ss3 -nohess", sep = " "))
+  if(isTRUE(lin)){
+    system("cd ../one_plus ss3 > /dev/null 2>&1")
+  }else{
+    shell(paste("cd/d", dir., "&& ss3 -nohess >NUL 2>&1", sep = " "))}
 
   temp.rep <- MO_SSoutput(dir = dir., verbose = F, printstats = F)
 
@@ -143,7 +151,10 @@ rebuild_f <- function(year, dir., dat.list, t_targ){
       fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
       fcast.$SPRtarget <- paste(i, "# SPR target (e.g. 0.40)", sep = " ")
       MO_writeforecast(fcast., dir = dir., overwrite = T)
-      shell(paste("cd/d", dir., "&& ss3 -nohess", sep = " "))
+      if(isTRUE(lin)){
+        system("cd ../one_plus ss3 > /dev/null 2>&1")
+      }else{
+        shell(paste("cd/d", dir., "&& ss3 -nohess >NUL 2>&1", sep = " "))}
       temp.rep <- MO_SSoutput(dir = dir., verbose = F, printstats = F)
 
       recovered <- temp.rep$derived_quants %>%
