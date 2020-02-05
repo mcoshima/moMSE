@@ -45,7 +45,7 @@ find_spr <- function(dir., nfleet, notifications = T, lin = FALSE) {
     MO_writeforecast(fcast., dir = dir., overwrite = T)
 
     tryCatch(if(isTRUE(lin)){
-      system("cd ../one_plus ss3 > /dev/null 2>&1")
+      system(paste("cd", dir., "&& SS3 > /dev/null 2>&1", sep = " "))
       }else{
         shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))},
              warning = function(c) {
@@ -53,7 +53,7 @@ find_spr <- function(dir., nfleet, notifications = T, lin = FALSE) {
                start$init_values_src <- 1
                SS_writestarter(starter,dir=dir.,file="starter.ss",overwrite=T)
                if(isTRUE(lin)){
-                 system("cd ../one_plus ss3 > /dev/null 2>&1")
+                 system(paste("cd", dir., "&& SS3 > /dev/null 2>&1", sep = " "))
                }else{
                    shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))}
                },
@@ -62,7 +62,7 @@ find_spr <- function(dir., nfleet, notifications = T, lin = FALSE) {
                start$init_values_src <- 1
                SS_writestarter(starter,dir=dir.,file="starter.ss",overwrite=T)
                if(isTRUE(lin)){
-                 system("cd ../one_plus ss3 > /dev/null 2>&1")
+                 system(paste("cd", dir., "&& SS3 > /dev/null 2>&1", sep = " "))
                  }else{
                    shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))}})
     rep.file <- MO_SSoutput(dir.)

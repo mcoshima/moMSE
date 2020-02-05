@@ -11,7 +11,7 @@ run_ss <- function(dir., lin = FALSE){
 
       message("Running SS now")
       if(isTRUE(lin)){
-        system("cd ../one_plus ss3 > /dev/null 2>&1")
+        system(paste("cd", dir., "&& ./SS3 > /dev/null 2>&1", sep = " "))
       }else{shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))}
 
       assign("error", FALSE, envir = globalenv())
