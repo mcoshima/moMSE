@@ -4,10 +4,12 @@
 \alias{try_jit}
 \title{This runs a jitter for ss if the model does not converge. Returns error = TRUE if it still doesn't converge.}
 \usage{
-try_jit(dir.)
+try_jit(dir., lin = FALSE)
 }
 \arguments{
 \item{dir.}{the directory of where to run ss from}
+
+\item{lin}{if TRUE, running on linux system, default is FALSE}
 }
 \description{
 This runs a jitter for ss if the model does not converge. Returns error = TRUE if it still doesn't converge.

@@ -39,17 +39,18 @@ run_ss <- function(dir., lin = FALSE){
 
 #' This runs a jitter for ss if the model does not converge. Returns error = TRUE if it still doesn't converge.
 #' @param dir. the directory of where to run ss from
+#' @param lin if TRUE, running on linux system, default is FALSE
 #' @keywords SS
 #' @export
 #'
-try_jit <- function(dir.){
+try_jit <- function(dir., lin = FALSE){
 
   out <- tryCatch(
     expr = {
 
       message("Running jitter")
       converge.params <- check_convergence(dir.)
-      jit_for_converg(converge.params, dir.)
+      jit_for_converg(converge.params, dir., lin)
       assign("error", FALSE, envir = globalenv())
 
     },
