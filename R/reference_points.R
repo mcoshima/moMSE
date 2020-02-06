@@ -50,7 +50,7 @@ find_spr <- function(dir., nfleet, notifications = T, lin = FALSE) {
         shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))},
              warning = function(c) {
                starter <- SS_readstarter(paste0(dir., "/starter.ss"))
-               start$init_values_src <- 1
+               starter$init_values_src <- 1
                SS_writestarter(starter,dir=dir.,file="starter.ss",overwrite=T)
                if(isTRUE(lin)){
                  system(paste("cd", dir., "&& SS3 > /dev/null 2>&1", sep = " "))
@@ -59,7 +59,7 @@ find_spr <- function(dir., nfleet, notifications = T, lin = FALSE) {
                },
              error = function(e) {
                starter <- SS_readstarter(paste0(dir., "/starter.ss"))
-               start$init_values_src <- 1
+               starter$init_values_src <- 1
                SS_writestarter(starter,dir=dir.,file="starter.ss",overwrite=T)
                if(isTRUE(lin)){
                  system(paste("cd", dir., "&& SS3 > /dev/null 2>&1", sep = " "))
