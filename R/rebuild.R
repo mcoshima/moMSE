@@ -18,7 +18,7 @@ rebuild_ttarg <- function(dir., dat.list, lin = FALSE){
   yr <- floor(year.seq[year])
   shrimp.forecast.h <- 0.07356127
 
-  fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
+  fcast. <- SS_readforecast(paste0(dir., "/forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
 
   years <-  rep(seq(yr+1, yr+60, by =1),each = 3)
 
@@ -99,7 +99,7 @@ rebuild_f <- function(year, dir., dat.list, t_targ, lin = FALSE){
   nfishfleet <- dat.list$N_totalfleet + 1
   nareas <- dat.list$N_areas
   shrimp.forecast.h <- 0.07356127
-  fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
+  fcast. <- SS_readforecast(paste0(dir., "/forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
   year.seq <- as.numeric(dat.list$year_seq)
   yr <- floor(year.seq[year])
   years <- seq(yr, yr + 60)
@@ -148,7 +148,7 @@ rebuild_f <- function(year, dir., dat.list, t_targ, lin = FALSE){
 
     for(i in SPRtarget){
 
-      fcast. <- SS_readforecast(paste0(dir., "/Forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
+      fcast. <- SS_readforecast(paste0(dir., "/forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
       fcast.$SPRtarget <- paste(i, "# SPR target (e.g. 0.40)", sep = " ")
       MO_writeforecast(fcast., dir = dir., overwrite = T)
       if(isTRUE(lin)){
