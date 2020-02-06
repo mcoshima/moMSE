@@ -8,7 +8,7 @@
 #'
 check_convergence <- function(dir.){
 
-  par.file <- paste0(dir., "/ss3.par")
+  par.file <- paste0(dir., "/SS3.par")
   convCheck <- readLines(par.file,n=1)
   convCheck <- strsplit(convCheck, split = "Maximum gradient component = ")[[1]][2]
 
