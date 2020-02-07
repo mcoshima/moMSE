@@ -13,7 +13,7 @@
 find_spr <- function(dir., nfleet, notifications = T, lin = FALSE) {
   rep.file <- MO_SSoutput(dir., forecast = FALSE, verbose = F, printstats = F, forefile = "Forecast-report.sso", covar = F)
 
-  print("Rep file read in")
+  message("Rep file read in")
 
   SPR <- rep.file$derived_quants %>%
     dplyr::filter(str_detect(Label, "Bratio")) %>%
@@ -31,8 +31,6 @@ find_spr <- function(dir., nfleet, notifications = T, lin = FALSE) {
     "0" = NA
   )
 
-  print(spr.seq)
-
   msg1 <- "SS run is complete and new report file was read in."
 
   if(length(spr.seq)==0){
@@ -45,7 +43,7 @@ find_spr <- function(dir., nfleet, notifications = T, lin = FALSE) {
     MO_writeforecast(fcast., dir = dir., overwrite = T)
 
     tryCatch(if(isTRUE(lin)){
-      system(paste("cd", dir., "&& SS3 > /dev/null 2>&1", sep = " "))
+      system(paste("cd", dir., "&& ./SS3 > /dev/null 2>&1", sep = " "))
       }else{
         shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))},
              warning = function(c) {
@@ -53,7 +51,7 @@ find_spr <- function(dir., nfleet, notifications = T, lin = FALSE) {
                starter$init_values_src <- 1
                SS_writestarter(starter,dir=dir.,file="starter.ss",overwrite=T)
                if(isTRUE(lin)){
-                 system(paste("cd", dir., "&& SS3 > /dev/null 2>&1", sep = " "))
+                 system(paste("cd", dir., "&& ./SS3 > /dev/null 2>&1", sep = " "))
                }else{
                    shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))}
                },
@@ -62,7 +60,7 @@ find_spr <- function(dir., nfleet, notifications = T, lin = FALSE) {
                starter$init_values_src <- 1
                SS_writestarter(starter,dir=dir.,file="starter.ss",overwrite=T)
                if(isTRUE(lin)){
-                 system(paste("cd", dir., "&& SS3 > /dev/null 2>&1", sep = " "))
+                 system(paste("cd", dir., "&& ./SS3 > /dev/null 2>&1", sep = " "))
                  }else{
                    shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))}})
     rep.file <- MO_SSoutput(dir.)
