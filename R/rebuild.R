@@ -51,7 +51,7 @@ rebuild_ttarg <- function(dir., dat.list, lin = FALSE){
   }
   MO_writeforecast(fcast., dir = dir., overwrite = T)
   if(isTRUE(lin)){
-    system(paste("cd", dir., "&& SS3 > /dev/null 2>&1", sep = " "))
+    system(paste("cd", dir., "&& ./SS3 > /dev/null 2>&1", sep = " "))
   }else{
       shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))}
 
@@ -126,7 +126,7 @@ rebuild_f <- function(year, dir., dat.list, t_targ, lin = FALSE){
   MO_writeforecast(fcast., dir = dir., overwrite = T)
 
   if(isTRUE(lin)){
-    system(paste("cd", dir., "&& SS3 > /dev/null 2>&1", sep = " "))
+    system(paste("cd", dir., "&& ./SS3 > /dev/null 2>&1", sep = " "))
   }else{
     shell(paste("cd/d", dir., "&& ss3 -nohess >NUL 2>&1", sep = " "))}
 
@@ -152,7 +152,7 @@ rebuild_f <- function(year, dir., dat.list, t_targ, lin = FALSE){
       fcast.$SPRtarget <- paste(i, "# SPR target (e.g. 0.40)", sep = " ")
       MO_writeforecast(fcast., dir = dir., overwrite = T)
       if(isTRUE(lin)){
-        system(paste("cd", dir., "&& SS3 > /dev/null 2>&1", sep = " "))
+        system(paste("cd", dir., "&& ./SS3 > /dev/null 2>&1", sep = " "))
       }else{
         shell(paste("cd/d", dir., "&& ss3 -nohess >NUL 2>&1", sep = " "))}
       temp.rep <- MO_SSoutput(dir = dir., verbose = F, printstats = F)
