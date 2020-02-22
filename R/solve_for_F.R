@@ -71,11 +71,12 @@ solve_for_f <- function(proj_catch, fleet, dat.list, year, N, total_catch = T){
 #' @param year year index
 #' @param dat.list list including M, Nages, weight-at-age, and selectivity
 #' @param total.catch is the projected catch a combined catch (T) or only for that fleet (F)
+#' @param biomass calculate harvest rate from catch in biomass (T, default) or catch in numbers (F)
 #' @return The harvest rate that achieves the projected catch level
 #' @keywords harvest rate, projections
 #' @export
 
-H_rate <- function(catch, fleet, N, year, dat.list, total.catch = F){
+H_rate <- function(catch, fleet, N, year, dat.list, total.catch = F, biomass = T){
 
   wt <- dat.list$wtatage
   S <- dat.list$age_selectivity
@@ -84,10 +85,12 @@ H_rate <- function(catch, fleet, N, year, dat.list, total.catch = F){
   if(total.catch == T){
     catch <- catch/c_prop[fleet]
   }
-  if(fleet == 1 | fleet == 2){
+  if(biomass == TRUE){
     hrate <- catch/sum(N[year-1,-1]*wt[1,]*S[fleet,])
+
   }else{
     hrate <- catch/sum(N[year-1,-1]*S[fleet,])
+
   }
 
   return(hrate)

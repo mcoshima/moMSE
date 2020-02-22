@@ -4,7 +4,7 @@
 \alias{H_rate}
 \title{Function to solve for harvest(exploitation) rate of a fleet based on catch for that year}
 \usage{
-H_rate(catch, fleet, N, year, dat.list, total.catch = F)
+H_rate(catch, fleet, N, year, dat.list, total.catch = F, biomass = T)
 }
 \arguments{
 \item{catch}{the expected catch from fleet for the year (in units of the fleet)}
@@ -18,6 +18,8 @@ H_rate(catch, fleet, N, year, dat.list, total.catch = F)
 \item{dat.list}{list including M, Nages, weight-at-age, and selectivity}
 
 \item{total.catch}{is the projected catch a combined catch (T) or only for that fleet (F)}
+
+\item{biomass}{calculate harvest rate from catch in biomass (T, default) or catch in numbers (F)}
 }
 \value{
 The harvest rate that achieves the projected catch level
