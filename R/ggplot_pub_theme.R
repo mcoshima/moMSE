@@ -40,7 +40,7 @@ theme_pub <- function(base_size = 12, base_family = "") {
       panel.grid = element_blank(),
       panel.spacing = unit(0.5, "lines"),
       # Specify facetting options
-      strip.background = element_rect(fill = "grey30", color = "grey10"),
+      strip.background = element_rect(fill = "white", color = "black", size = rel(2)),
       strip.text.x = element_text(size = base_size*0.8, color = "black"),
       strip.text.y = element_text(size = base_size*0.8, color = "black",angle = -90),
       # Specify plot options
