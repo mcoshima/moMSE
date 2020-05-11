@@ -45,9 +45,9 @@ exploit_catch <- function(F_exploit, N, year, dat.list){
       next()
     }
     if(fleet == 1 | fleet == 2){
-      cage[fleet,] <- unlist(F_exploit[fleet]*(N[year-1,-1]*wt[1,]*S[fleet,]))
+      cage[fleet,] <- unlist(F_exploit[fleet]*sum(N[year-1,-1]*wt[1,]*S[fleet,]))
     }else{
-      cage[fleet,] <- unlist(F_exploit[fleet]*(N[year-1,-1]*S[fleet,]))
+      cage[fleet,] <- unlist(F_exploit[fleet]*sum(N[year-1,-1]*S[fleet,]))
 
     }
   }
