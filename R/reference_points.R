@@ -31,7 +31,7 @@ find_spr <- function(dir., nfleet, notifications = T, lin = FALSE) {
     "0" = NA
   )
 
-  msg1 <- "SS run is complete and new report file was read in."
+
 
   if(length(spr.seq)==0){
     print("Already at spr30")
@@ -63,7 +63,25 @@ find_spr <- function(dir., nfleet, notifications = T, lin = FALSE) {
                  system(paste("cd", dir., "&& ./SS3 > /dev/null 2>&1", sep = " "))
                  }else{
                    shell(paste("cd/d", dir., "&& ss3 >NUL 2>&1", sep = " "))}})
-    rep.file <- MO_SSoutput(dir.)
+
+    out <- tryCatch(
+
+      expr = {
+        rep.file <- MO_SSoutput(dir.)
+        assign("error", FALSE, envir = globalenv())
+      },
+
+      error = function(e){
+        assign("error", TRUE, envir = globalenv())
+        return(error)
+      }
+
+    )
+
+    if(isTRUE(out)){
+      run_ss(dir., lin)
+      rep.file <- MO_SSoutput(dir.)
+    }
 
     SPR <- rep.file$derived_quants %>%
       dplyr::filter(str_detect(Label, "Bratio")) %>%
