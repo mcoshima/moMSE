@@ -184,7 +184,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I 
              obs = value)
 
 
-    new.cpue <- splt.recombine(dat.$CPUE, new.index, 'index', N = length(unique(new.index$index)))
+    new.cpue <- splt.recombine(dat.$CPUE, new.index, index, N = length(unique(new.index$index)))
 
     dat.$CPUE <- new.cpue[which(new.cpue$obs > 0),]
 
@@ -222,7 +222,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I 
       rename(index = variable,
              obs = value)
 
-    new.cpue <- splt.recombine(dat.$CPUE, new.index, 'index', N = length(unique(new.index$index)))
+    new.cpue <- splt.recombine(dat.$CPUE, new.index, index, N = length(unique(new.index$index)))
 
     dat.$CPUE <- new.cpue[which(new.cpue$obs > 0),]
 
@@ -239,7 +239,7 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I 
 
     sub.acomps <- compact(agecomp.list[rows])
     new.acomp <- do.call(rbind, sub.acomps)
-    agecomp <- splt.recombine(dat.$agecomp, new.acomp, 'FltSvy', N=3)
+    agecomp <- splt.recombine(dat.$agecomp, new.acomp, FltSvy, N=3)
 
     dat.$agecomp <- agecomp %>%
       group_by(FltSvy) %>%

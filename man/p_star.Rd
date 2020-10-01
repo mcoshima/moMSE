@@ -4,8 +4,14 @@
 \alias{p_star}
 \title{Find the acceptable probability of going past the OFL (P*)}
 \usage{
-p_star(Assess_info = "2", OFL_uncert = "2", Retro_pats = "3",
-  Environ = "3", min.risk = 0.3, max.risk = 0.5)
+p_star(
+  Assess_info = "2",
+  OFL_uncert = "2",
+  Retro_pats = "3",
+  Environ = "3",
+  min.risk = 0.3,
+  max.risk = 0.5
+)
 }
 \arguments{
 \item{Assess_info}{number for how much info is available for assessement}

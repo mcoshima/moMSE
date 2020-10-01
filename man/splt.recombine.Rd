@@ -4,14 +4,14 @@
 \alias{splt.recombine}
 \title{General use functions for data generation and manipulation}
 \usage{
-splt.recombine(df1, df2, ind, N)
+splt.recombine(df1, df2, group_var, N)
 }
 \arguments{
 \item{df1}{first dataframe you want to split}
 
 \item{df2}{second dataframe you want to split}
 
-\item{ind}{column name of index attribute you want to group and split dataframes by}
+\item{group_var}{column name of index attribute you want to group and split dataframes by (do not need quotes around the name)}
 
 \item{N}{number of individual indices}
 }

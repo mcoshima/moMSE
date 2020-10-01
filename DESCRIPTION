@@ -5,7 +5,7 @@ Version: 0.1.0
 Authors@R: person("Meg", "Oshima", email = "megumi.oshima@usm.edu", role = c("aut", "cre"))
 Description: These are custom functions for running my Vermilion Snapper MSE. Not intended for general use but feel free to use any code that is helpful.
 Depends: R (>= 3.2.0)
-Imports:dplyr, 
+Imports: dplyr, 
 	ggplot2,
 	magrittr,
 	purrr,
@@ -19,5 +19,4 @@ License: Unlimited
 Encoding: UTF-8
 LazyData: true
 Suggests: testthat
-RoxygenNote: 6.1.1
-
+RoxygenNote: 7.1.1
