@@ -181,7 +181,8 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I 
              value,
              se_log) %>%
       rename(index = variable,
-             obs = value)
+             obs = value) %>%
+      mutate(index = as.numeric(as.character(index)))
 
 
     new.cpue <- splt.recombine(dat.$CPUE, new.index, index, N = length(unique(new.index$index)))
@@ -220,7 +221,8 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I 
              value,
              se_log) %>%
       rename(index = variable,
-             obs = value)
+             obs = value) %>%
+      mutate(index = as.numeric(as.character(index)))
 
     new.cpue <- splt.recombine(dat.$CPUE, new.index, index, N = length(unique(new.index$index)))
 

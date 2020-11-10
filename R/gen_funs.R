@@ -37,7 +37,7 @@ splt.recombine <- function(df1, df2, group_var, N){
     sort()
 
   split.new <- df2 %>%
-    mutate_at(vars(!!col), function(x) x = as.numeric(paste(x))) %>%
+    #mutate_at(vars(!!col), function(x) x = as.numeric(paste(x))) %>%
     group_by(!!group_var) %>%
     group_split() %>%
     setNames(names.2)
