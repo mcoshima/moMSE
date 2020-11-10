@@ -255,7 +255,8 @@ dat.update <- function(year, dat.list, dat., agecomp.list, I, .datcatch, comp.I 
     SS_writedat_3.24(dat., outfile = paste0(dir.,"/VS.dat"), overwrite = T)
 
     ct. <- readLines(paste0(dir.,"/VS.ctl"),-1)
-    ct.[83] <- paste(yr, "# last year of main recr_devs; forecast devs start in following year", sep = " ")
+    ind. <- which(str_detect(ct., "# last year of main recr_devs; forecast devs"))
+    ct.[ind.] <- paste(yr, "# last year of main recr_devs; forecast devs start in following year", sep = " ")
     writeLines(ct., paste0(dir., "/VS.ctl"))
     fore <- SS_readforecast(paste0(dir., "/forecast.ss"), Nfleets = dat.list$N_totalfleet, Nareas = 1, nseas = 1, version = "3.24")
     fore$Nforecastyrs <- 60
