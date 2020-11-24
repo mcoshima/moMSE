@@ -105,7 +105,7 @@ rebuild_f <- function(year, dir., dat.list, t_targ, lin = FALSE){
   years <- seq(yr, yr + 59)
 
   f1 <- dat.list$RS_projections %>%
-    filter(Year > yr & Year <= yr+59) %>%
+    filter(Year >= yr & Year <= yr+59) %>%
     mutate(Seas = rep(1, nrow(.)),
            Fleet = rep(5, nrow(.)),
            Catch = RS_relative) %>%
