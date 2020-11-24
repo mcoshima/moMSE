@@ -102,10 +102,10 @@ rebuild_f <- function(year, dir., dat.list, t_targ, lin = FALSE){
   fcast. <- SS_readforecast(paste0(dir., "/forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
   year.seq <- as.numeric(dat.list$year_seq)
   yr <- floor(year.seq[year])
-  years <- seq(yr, yr + 60)
+  years <- seq(yr, yr + 59)
 
   f1 <- dat.list$RS_projections %>%
-    filter(Year > yr & Year <= yr+60) %>%
+    filter(Year > yr & Year <= yr+59) %>%
     mutate(Seas = rep(1, nrow(.)),
            Fleet = rep(5, nrow(.)),
            Catch = RS_relative) %>%
@@ -121,7 +121,6 @@ rebuild_f <- function(year, dir., dat.list, t_targ, lin = FALSE){
   fcast.$ForeCatch <- Fore_h
   fcast.$Ncatch <- nrow(Fore_h)
   fcast.$InputBasis <- 99
-  #fcast.$SPRtarget <- fcast.$SPRtarget
 
   MO_writeforecast(fcast., dir = dir., overwrite = T)
 
@@ -144,7 +143,7 @@ rebuild_f <- function(year, dir., dat.list, t_targ, lin = FALSE){
 
   if(recov == FALSE){
 
-    SPRtarget <- seq(fcast.$SPRtarget, 0, by = -.01)
+    SPRtarget <- seq(fcast.$SPRtarget, 1, by = .01)
 
     for(i in SPRtarget){
 
