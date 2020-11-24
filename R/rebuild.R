@@ -101,7 +101,7 @@ rebuild_f <- function(year, dir., dat.list, t_targ, lin = FALSE){
   shrimp.forecast.h <- 0.07356127
   fcast. <- SS_readforecast(paste0(dir., "/forecast.ss"), Nfleets = 5, Nareas = 1, version = "3.24")
   year.seq <- as.numeric(dat.list$year_seq)
-  yr <- floor(year.seq[year])
+  yr <- ceiling(year.seq[year])
   years <- seq(yr, yr + 59)
 
   f1 <- dat.list$RS_projections %>%
